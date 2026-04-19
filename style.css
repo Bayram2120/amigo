@@ -124,6 +124,9 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     transition: transform 0.2s;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .product-card:active {
@@ -139,6 +142,9 @@ body {
 
 .product-info {
     padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-name {
@@ -150,7 +156,7 @@ body {
     text-overflow: ellipsis;
 }
 
-/* ===== ГЛАВНОЕ: ЦЕНА И SALE В ОДНОЙ СТРОКЕ ===== */
+/* Цена и SALE в одной строке - ФИКСИРОВАННАЯ ВЫСОТА */
 .product-price-wrapper {
     display: flex;
     align-items: center;
@@ -158,6 +164,7 @@ body {
     gap: 8px;
     margin: 5px 0;
     width: 100%;
+    min-height: 28px;
 }
 
 .product-price {
@@ -177,7 +184,15 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
-/* =========================================== */
+
+/* Пустой заглушка для одинаковой высоты */
+.sale-placeholder {
+    display: inline-block;
+    width: 58px;
+    height: 22px;
+    visibility: hidden;
+    flex-shrink: 0;
+}
 
 .open-btn {
     background: #1a1a2e;
@@ -188,7 +203,7 @@ body {
     font-size: 12px;
     cursor: pointer;
     width: 100%;
-    margin-top: 8px;
+    margin-top: auto;
 }
 
 .modal-overlay {
