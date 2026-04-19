@@ -389,4 +389,108 @@ function renderShopPage() {
         return;
     }
     
-    const searchTerm = document.getElementById('searchInput
+    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    let filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+    if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
+    
+    const popular = filtered.filter(p => p.popular);
+    const other = filtered.filter(p => !p.popular);
+    
+    let html = `<div class="categories-grid"><div class="category-chip ${currentCategory === 'all' ? 'active' : ''}" data-cat="all">Все</div>`;
+    categories.forEach(cat => { 
+        html += `<div class="category-chip ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${escapeHtml(cat)}</div>`; 
+    });
+    html += `</div>`;
+    
+    if (popular.length) html += `<h2 class="section-title">⭐ Популярное</h2><div class="products-grid">${popular.map(p => renderProductCard(p)).join('')}</div>`;
+    if (other.length) html += `<h2 class="section-title">📦 Все товары</h2><div class="products-grid">${other.map(p => renderProductCard(p)).join('')}</div>`;
+    if (!filtered.length) html = `<div style="text-align:center;padding:50px">🔍 Ничего не найдено</div>`;
+    
+    document.getElementById('mainContent').innerHTML = html;
+    
+    document.querySelectorAll('.category-chip').forEach(el => {
+        el.addEventListener('click', () => { 
+            currentCategory = el.dataset.cat; 
+            renderShopPage(); 
+        });
+    });
+}
+
+function renderSalesPage() {
+    if (!products.length) {
+        document.getElementById('mainContent').innerHTML = '<div style="text-align:center; padding:50px">Загрузка...</div>';
+        return;
+    }
+    const saleProducts = products.filter(p => p.sale === true);
+    let html = `<h2 class="section-title">🔥 Акции</h2><div class="products-grid">${saleProducts.length ? saleProducts.map(p => renderProductCard(p)).join('') : '<div style="text-align:center;padding:50px">Нет товаров по акции</div>'}</div>`;
+    document.getElementById('mainContent').innerHTML = html;
+}
+
+function renderCartPage() {
+    if (!cart.length) { 
+        document.getElementById('mainContent').innerHTML = '<div class="empty-cart">🛒 Корзина пуста</div>'; 
+        return; 
+    }
+    
+    let html = `<h2 class="section-title">🛒 Корзина</h2><div class="cart-items-list">`;
+    let total = 0;
+    cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${escapeHtml(item.name)}</div>
+                    <div class="cart-item-price">${item.price}₽ × ${item.quantity} = ${itemTotal}₽</div>
+                    <div class="cart-item-details">${item.selectedRange ? `Сумма: ${item.selectedRange}` : ''}${item.selectedVariant ? ` | ${escapeHtml(item.selectedVariant)}` : ''}</div>
+                </div>
+                <div class="cart-item-controls">
+                    <button class="quantity-btn" data-idx="${idx}" data-delta="-1">−</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" data-idx="${idx}" data-delta="1">+</button>
+                    <button class="remove-item" data-idx="${idx}">🗑️</button>
+                </div>
+            </div>
+        `;
+    });
+    html += `</div><div class="cart-total"><h3>Итого: ${total}₽</h3><button class="checkout-btn" id="checkoutBtn">✅ Оформить заказ</button></div>`;
+    document.getElementById('mainContent').innerHTML = html;
+    
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.idx);
+            const delta = parseInt(btn.dataset.delta);
+            const newQty = cart[idx].quantity + delta;
+            if (newQty <= 0) cart.splice(idx, 1);
+            else cart[idx].quantity = newQty;
+            saveCart();
+            renderCartPage();
+            updateCartBadge();
+        });
+    });
+    
+    document.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', () => { 
+            cart.splice(parseInt(btn.dataset.idx), 1); 
+            saveCart(); 
+            renderCartPage(); 
+            updateCartBadge(); 
+        });
+    });
+    
+    document.getElementById('checkoutBtn')?.addEventListener('click', checkout);
+}
+
+function renderContactsPage() {
+    const phone = shopConfig.contactPhone || "+7 (999) 123-45-67";
+    document.getElementById('mainContent').innerHTML = `
+        <div class="contacts-page">
+            <h2 class="section-title">📞 Контакты</h2>
+            <div class="contact-phone">${phone}</div>
+            <p>Свяжитесь с нами любым удобным способом</p>
+            <p style="margin-top:20px; color:#888">Работаем ежедневно 10:00-21:00</p>
+        </div>
+    `;
+}
+
+loadData();
