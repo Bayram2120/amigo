@@ -1,32 +1,86 @@
-// Инициализация Telegram WebApp
-const tg = window.Telegram.WebApp;
-tg.expand();
-tg.enableClosingConfirmation();
-
+// ============ ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ============
 let products = [];
 let categories = [];
-let cart = JSON.parse(localStorage.getItem('amigoopt_cart')) || [];
+let shopConfig = {};
+let cart = [];
 let currentPage = 'shop';
 let currentCategory = 'all';
+
+// Переменные для модального окна
 let currentProduct = null;
 let selectedRange = null;
+let selectedPrice = null;
 let selectedVariant = null;
 
-// Загрузка данных
+// ============ ЗАГРУЗКА ДАННЫХ ============
 async function loadData() {
     try {
-        const response = await fetch('data.json');
+        const response = await fetch('./data.json');
         const data = await response.json();
+        
         products = data.products;
         categories = data.categories;
-        window.shopData = data;
-        render();
+        shopConfig = {
+            shopName: data.shopName,
+            contactPhone: data.contactPhone,
+            managerTgId: data.managerTgId,
+            botToken: data.botToken
+        };
+        
+        // Загружаем корзину
+        const savedCart = localStorage.getItem('amigoopt_cart');
+        if (savedCart) cart = JSON.parse(savedCart);
+        
+        // Инициализация Telegram WebApp
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.expand();
+        }
+        
+        // Запускаем приложение
+        initApp();
+        
     } catch (error) {
-        console.error('Ошибка загрузки:', error);
+        console.error('Ошибка загрузки данных:', error);
+        document.getElementById('mainContent').innerHTML = '<div style="text-align:center;padding:50px;color:red;">Ошибка загрузки данных. Проверьте файл data.json</div>';
     }
 }
 
-// Сохранение корзины
+// ============ ИНИЦИАЛИЗАЦИЯ ============
+function initApp() {
+    // Навигация
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchPage(btn.dataset.page));
+    });
+    
+    // Поиск
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            if (currentPage === 'shop') renderShopPage();
+        });
+    }
+    
+    // Стартовая страница
+    switchPage('shop');
+    updateCartBadge();
+}
+
+// ============ НАВИГАЦИЯ ============
+function switchPage(page) {
+    currentPage = page;
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.page === page);
+    });
+    
+    if (page === 'shop') renderShopPage();
+    else if (page === 'sales') renderSalesPage();
+    else if (page === 'cart') renderCartPage();
+    else if (page === 'contacts') renderContactsPage();
+    
+    updateCartBadge();
+}
+
+// ============ КОРЗИНА ============
 function saveCart() {
     localStorage.setItem('amigoopt_cart', JSON.stringify(cart));
     updateCartBadge();
@@ -34,248 +88,207 @@ function saveCart() {
 
 function updateCartBadge() {
     const badge = document.getElementById('cartBadge');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (badge) {
-        badge.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'flex' : 'none';
+        badge.textContent = total;
+        badge.style.display = total > 0 ? 'flex' : 'none';
     }
 }
 
-// Добавление в корзину
-function addToCart(product, range, variant, price) {
-    const existing = cart.find(item => 
-        item.id === product.id && 
-        item.selectedRange === range && 
-        item.selectedVariant === variant
-    );
-    
-    if (existing) {
-        existing.quantity++;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: price,
-            selectedRange: range,
-            selectedVariant: variant,
-            quantity: 1
-        });
-    }
-    saveCart();
-    alert('✅ Товар добавлен в корзину');
-    closeModal();
+function getProductPrice(product, rangeKey) {
+    if (product.sale && product.salePrice) return product.salePrice;
+    return product.priceRanges[rangeKey] || Object.values(product.priceRanges)[0];
 }
 
-// Отправка заказа в Telegram
+function getVariantType(product) {
+    if (product.flavors && product.flavors.length) return { type: 'flavors', label: 'Выберите вкус', items: product.flavors };
+    if (product.colors && product.colors.length) return { type: 'colors', label: 'Выберите цвет', items: product.colors };
+    if (product.resistances && product.resistances.length) return { type: 'resistances', label: 'Выберите сопротивление', items: product.resistances };
+    return null;
+}
+
+// ============ ОТПРАВКА В TELEGRAM ============
 async function sendOrderToTelegram(orderText) {
-    const data = window.shopData;
-    if (!data || !data.botToken || !data.managerTgId) {
-        console.error('Не настроен бот');
+    if (!shopConfig.botToken || shopConfig.botToken === "8629659554:AAH8jhO69OYbr0tnSQXuHKMdA3p3To7Ws7Q") {
+        console.log('Демо-режим: заказ не отправлен (настройте бота в data.json)');
         return;
     }
-    
-    const url = `https://api.telegram.org/bot${data.botToken}/sendMessage`;
-    const payload = {
-        chat_id: data.managerTgId,
-        text: orderText,
-        parse_mode: 'HTML'
-    };
-    
     try {
-        await fetch(url, {
+        await fetch(`https://api.telegram.org/bot${shopConfig.botToken}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ 
+                chat_id: shopConfig.managerTgId, 
+                text: orderText, 
+                parse_mode: 'HTML' 
+            })
         });
-    } catch (error) {
-        console.error('Ошибка отправки:', error);
-    }
+    } catch(e) { console.error(e); }
 }
 
-// Оформление заказа
 function checkout() {
-    if (cart.length === 0) {
-        alert('Корзина пуста');
-        return;
+    if (cart.length === 0) { 
+        alert('Корзина пуста'); 
+        return; 
     }
     
-    let orderDetails = '🛍️ <b>НОВЫЙ ЗАКАЗ</b>\n\n';
+    let order = '🛍️ <b>НОВЫЙ ЗАКАЗ</b>\n\n';
     let total = 0;
-    
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        orderDetails += `📦 ${item.name}\n`;
-        orderDetails += `   💰 ${item.price}₽ × ${item.quantity} = ${itemTotal}₽\n`;
-        if (item.selectedRange) orderDetails += `   📊 Сумма: ${item.selectedRange}\n`;
-        if (item.selectedVariant) orderDetails += `   🎨 ${item.selectedVariant}\n`;
-        orderDetails += `\n`;
+        order += `📦 ${item.name}\n   💰 ${item.price}₽ × ${item.quantity} = ${itemTotal}₽\n`;
+        if (item.selectedRange) order += `   📊 ${item.selectedRange}\n`;
+        if (item.selectedVariant) order += `   🎨 ${item.selectedVariant}\n`;
+        order += `\n`;
     });
+    order += `━━━━━━━━━━━━━━━━\n<b>ИТОГО: ${total}₽</b>`;
     
-    orderDetails += `━━━━━━━━━━━━━━━━\n`;
-    orderDetails += `<b>ИТОГО: ${total}₽</b>\n`;
-    orderDetails += `━━━━━━━━━━━━━━━━\n`;
-    
-    sendOrderToTelegram(orderDetails);
-    
-    alert('✅ Ваш заказ оформлен! Менеджер свяжется с вами.');
+    sendOrderToTelegram(order);
+    alert('✅ Заказ оформлен! Менеджер свяжется с вами.');
     cart = [];
     saveCart();
-    renderCartPage();
+    if (currentPage === 'cart') renderCartPage();
+    updateCartBadge();
 }
 
-// Открыть модальное окно товара
+// ============ МОДАЛЬНОЕ ОКНО (ПОСЛЕДОВАТЕЛЬНЫЙ ВЫБОР) ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
+    selectedPrice = null;
     selectedVariant = null;
     
-    const ranges = Object.keys(product.priceRanges);
-    const rangeMap = {
-        '3000-10000': '3 000 - 10 000 ₽',
-        '30000-100000': '30 000 - 100 000 ₽',
-        '100000-999999': '100 000+ ₽'
+    const variantInfo = getVariantType(product);
+    const rangeMap = { 
+        '3000-10000': '3 000 - 10 000 ₽', 
+        '30000-100000': '30 000 - 100 000 ₽', 
+        '100000-999999': '100 000+ ₽' 
     };
     
-    let html = `
-        <div class="modal" id="productModal" style="display:flex">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>${product.name}</h3>
-                    <button class="close-modal" onclick="closeModal()">×</button>
+    let rangesHtml = '<div class="range-options">';
+    for (const [range, price] of Object.entries(product.priceRanges)) {
+        rangesHtml += `<button class="range-btn" data-range="${range}" data-price="${price}">${rangeMap[range] || range} — ${price}₽/шт</button>`;
+    }
+    rangesHtml += '</div>';
+    
+    let variantsHtml = '';
+    if (variantInfo) {
+        variantsHtml = `<div id="step2Container" style="display:none;">
+            <div class="step-title"><span class="step-number">2</span> ${variantInfo.label}</div>
+            <div class="variants-grid" id="variantsGrid">
+                ${variantInfo.items.map(v => `<button class="variant-option" data-variant="${v}">${v}</button>`).join('')}
+            </div>
+        </div>`;
+    }
+    
+    const modal = document.getElementById('modalOverlay');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>${product.name}</h3>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <img src="${product.photo}" class="modal-image" onerror="this.src='https://placehold.co/300x200/eee/999?text=No+Image'">
+                <p style="color:#666; margin-bottom:10px;">${product.description}</p>
+                <div id="step1Container">
+                    <div class="step-title"><span class="step-number">1</span> Выберите сумму заказа</div>
+                    ${rangesHtml}
                 </div>
-                <div class="modal-body">
-                    <img src="${product.photo}" style="width:100%; border-radius:12px; margin-bottom:15px">
-                    <p>${product.description}</p>
-                    <h4>Выберите сумму заказа:</h4>
-                    <div class="range-options">
-    `;
-    
-    ranges.forEach(range => {
-        const price = product.priceRanges[range];
-        const rangeText = rangeMap[range] || range;
-        html += `<button class="range-btn" data-range="${range}" data-price="${price}" onclick="selectRange('${range}', ${price})">${rangeText} — ${price}₽/шт</button>`;
-    });
-    
-    html += `</div>`;
-    
-    if (product.flavors && product.flavors.length > 0) {
-        html += `<h4>Выберите вкус:</h4><div class="variants-grid" id="variantsGrid">`;
-        product.flavors.forEach(flavor => {
-            html += `<button class="variant-option" data-variant="${flavor}" onclick="selectVariant('${flavor}')">${flavor}</button>`;
-        });
-        html += `</div>`;
-    }
-    
-    if (product.colors && product.colors.length > 0) {
-        html += `<h4>Выберите цвет:</h4><div class="variants-grid" id="variantsGrid">`;
-        product.colors.forEach(color => {
-            html += `<button class="variant-option" data-variant="${color}" onclick="selectVariant('${color}')">${color}</button>`;
-        });
-        html += `</div>`;
-    }
-    
-    if (product.resistances && product.resistances.length > 0) {
-        html += `<h4>Выберите сопротивление:</h4><div class="variants-grid" id="variantsGrid">`;
-        product.resistances.forEach(res => {
-            html += `<button class="variant-option" data-variant="${res}" onclick="selectVariant('${res}')">${res}</button>`;
-        });
-        html += `</div>`;
-    }
-    
-    html += `<button class="add-to-cart-btn" onclick="addCurrentToCart()">🛒 Добавить в корзину</button>
-                </div>
+                ${variantsHtml}
+                <button class="add-to-cart-btn disabled" id="addToCartBtn">⬅️ Сначала выберите сумму</button>
             </div>
         </div>
     `;
+    modal.style.display = 'block';
     
-    document.body.insertAdjacentHTML('beforeend', html);
-}
-
-function selectRange(range, price) {
-    selectedRange = range;
-    selectedPrice = price;
-    document.querySelectorAll('.range-btn').forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('selected');
-}
-
-function selectVariant(variant) {
-    selectedVariant = variant;
-    document.querySelectorAll('.variant-option').forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('selected');
-}
-
-function addCurrentToCart() {
-    if (!selectedRange) {
-        alert('Выберите сумму заказа');
-        return;
+    // Шаг 1: выбор суммы
+    document.querySelectorAll('.range-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedRange = btn.dataset.range;
+            selectedPrice = parseInt(btn.dataset.price);
+            
+            const variantInfo2 = getVariantType(product);
+            if (variantInfo2) {
+                // Переход к шагу 2
+                document.getElementById('step1Container').style.opacity = '0.5';
+                const step2Container = document.getElementById('step2Container');
+                if (step2Container) step2Container.style.display = 'block';
+                step2Container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                document.getElementById('addToCartBtn').textContent = '⬅️ Выберите вариант';
+                document.getElementById('addToCartBtn').classList.add('disabled');
+            } else {
+                // Нет вариантов - сразу можно добавлять
+                document.getElementById('addToCartBtn').textContent = '🛒 Добавить в корзину';
+                document.getElementById('addToCartBtn').classList.remove('disabled');
+            }
+        });
+    });
+    
+    // Шаг 2: выбор варианта
+    if (variantInfo) {
+        setTimeout(() => {
+            document.querySelectorAll('.variant-option').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.variant-option').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedVariant = btn.dataset.variant;
+                    document.getElementById('addToCartBtn').textContent = '🛒 Добавить в корзину';
+                    document.getElementById('addToCartBtn').classList.remove('disabled');
+                });
+            });
+        }, 50);
     }
     
-    if ((currentProduct.flavors || currentProduct.colors || currentProduct.resistances) && !selectedVariant) {
-        alert('Выберите вариант');
-        return;
-    }
-    
-    addToCart(currentProduct, selectedRange, selectedVariant, selectedPrice);
+    const addBtn = document.getElementById('addToCartBtn');
+    addBtn.onclick = () => {
+        if (!selectedRange) { 
+            alert('Сначала выберите сумму заказа'); 
+            return; 
+        }
+        const variantInfo3 = getVariantType(product);
+        if (variantInfo3 && !selectedVariant) { 
+            alert('Выберите вариант'); 
+            return; 
+        }
+        
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: selectedPrice,
+            selectedRange: selectedRange,
+            selectedVariant: selectedVariant || null,
+            quantity: 1
+        });
+        saveCart();
+        closeModal();
+        alert('✅ Товар добавлен в корзину');
+        if (currentPage === 'cart') renderCartPage();
+        updateCartBadge();
+    };
 }
 
 function closeModal() {
-    const modal = document.getElementById('productModal');
-    if (modal) modal.remove();
+    document.getElementById('modalOverlay').style.display = 'none';
+    document.getElementById('modalOverlay').innerHTML = '';
 }
 
-// Рендер магазина
-function renderShopPage() {
-    let filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
-    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
-    if (searchTerm) {
-        filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
-    }
-    
-    const popular = filtered.filter(p => p.popular);
-    const other = filtered.filter(p => !p.popular);
-    
-    let html = `
-        <div class="categories-grid">
-            <div class="category-chip ${currentCategory === 'all' ? 'active' : ''}" data-cat="all">Все</div>
-    `;
-    
-    categories.forEach(cat => {
-        html += `<div class="category-chip ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${cat}</div>`;
-    });
-    
-    html += `</div>`;
-    
-    if (popular.length > 0) {
-        html += `<h2 class="section-title">⭐ Популярное</h2><div class="products-grid">`;
-        popular.forEach(p => html += renderProductCard(p));
-        html += `</div>`;
-    }
-    
-    if (other.length > 0) {
-        html += `<h2 class="section-title">📦 Все товары</h2><div class="products-grid">`;
-        other.forEach(p => html += renderProductCard(p));
-        html += `</div>`;
-    }
-    
-    document.getElementById('mainContent').innerHTML = html;
-    
-    document.querySelectorAll('.category-chip').forEach(el => {
-        el.addEventListener('click', () => {
-            currentCategory = el.dataset.cat;
-            renderShopPage();
-        });
-    });
-}
-
+// ============ РЕНДЕР СТРАНИЦ ============
 function renderProductCard(product) {
-    const price = product.sale ? product.salePrice : Object.values(product.priceRanges)[0];
+    const displayPrice = product.sale ? product.salePrice : Object.values(product.priceRanges)[0];
+    // Экранируем product для передачи в onclick
+    const productJson = JSON.stringify(product).replace(/'/g, "&#39;");
     return `
-        <div class="product-card" onclick="openProductModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+        <div class="product-card" onclick='openProductModal(${productJson})'>
             <img src="${product.photo}" class="product-image" onerror="this.src='https://placehold.co/300x200/eee/999?text=No+Image'">
             <div class="product-info">
-                <div class="product-name">${product.name}</div>
-                <div class="product-price">${price}₽</div>
+                <div class="product-name">${escapeHtml(product.name)}</div>
+                <div class="product-price">${displayPrice}₽</div>
                 ${product.sale ? '<span class="sale-badge">🔥 SALE</span>' : ''}
                 <button class="open-btn">Открыть</button>
             </div>
@@ -283,123 +296,72 @@ function renderProductCard(product) {
     `;
 }
 
-// Рендер акций
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function renderShopPage() {
+    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    let filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+    if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
+    
+    const popular = filtered.filter(p => p.popular);
+    const other = filtered.filter(p => !p.popular);
+    
+    let html = `<div class="categories-grid"><div class="category-chip ${currentCategory === 'all' ? 'active' : ''}" data-cat="all">Все</div>`;
+    categories.forEach(cat => { 
+        html += `<div class="category-chip ${currentCategory === cat ? 'active' : ''}" data-cat="${cat}">${escapeHtml(cat)}</div>`; 
+    });
+    html += `</div>`;
+    
+    if (popular.length) html += `<h2 class="section-title">⭐ Популярное</h2><div class="products-grid">${popular.map(p => renderProductCard(p)).join('')}</div>`;
+    if (other.length) html += `<h2 class="section-title">📦 Все товары</h2><div class="products-grid">${other.map(p => renderProductCard(p)).join('')}</div>`;
+    if (!filtered.length) html = `<div style="text-align:center;padding:50px">🔍 Ничего не найдено</div>`;
+    
+    document.getElementById('mainContent').innerHTML = html;
+    
+    document.querySelectorAll('.category-chip').forEach(el => {
+        el.addEventListener('click', () => { 
+            currentCategory = el.dataset.cat; 
+            renderShopPage(); 
+        });
+    });
+}
+
 function renderSalesPage() {
     const saleProducts = products.filter(p => p.sale === true);
-    let html = `<h2 class="section-title">🔥 Акции</h2><div class="products-grid">`;
-    saleProducts.forEach(p => html += renderProductCard(p));
-    html += `</div>`;
+    let html = `<h2 class="section-title">🔥 Акции</h2><div class="products-grid">${saleProducts.length ? saleProducts.map(p => renderProductCard(p)).join('') : '<div style="text-align:center;padding:50px">Нет товаров по акции</div>'}</div>`;
     document.getElementById('mainContent').innerHTML = html;
 }
 
-// Рендер корзины
 function renderCartPage() {
-    if (cart.length === 0) {
-        document.getElementById('mainContent').innerHTML = `<div style="text-align:center; padding:50px">🛒 Корзина пуста</div>`;
-        return;
+    if (!cart.length) { 
+        document.getElementById('mainContent').innerHTML = '<div class="empty-cart">🛒 Корзина пуста</div>'; 
+        return; 
     }
     
-    let html = `<h2 class="section-title">🛒 Корзина</h2>`;
+    let html = `<h2 class="section-title">🛒 Корзина</h2><div class="cart-items-list">`;
     let total = 0;
-    
-    cart.forEach((item, index) => {
+    cart.forEach((item, idx) => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         html += `
             <div class="cart-item">
                 <div class="cart-item-info">
-                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-title">${escapeHtml(item.name)}</div>
                     <div class="cart-item-price">${item.price}₽ × ${item.quantity} = ${itemTotal}₽</div>
-                    ${item.selectedRange ? `<small>Сумма: ${item.selectedRange}</small><br>` : ''}
-                    ${item.selectedVariant ? `<small>${item.selectedVariant}</small>` : ''}
+                    <div class="cart-item-details">${item.selectedRange ? `Сумма: ${item.selectedRange}` : ''}${item.selectedVariant ? ` | ${escapeHtml(item.selectedVariant)}` : ''}</div>
                 </div>
                 <div class="cart-item-controls">
-                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                    <button class="quantity-btn" data-idx="${idx}" data-delta="-1">−</button>
                     <span>${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                    <button class="remove-item" onclick="removeCartItem(${index})">🗑️</button>
+                    <button class="quantity-btn" data-idx="${idx}" data-delta="1">+</button>
+                    <button class="remove-item" data-idx="${idx}">🗑️</button>
                 </div>
             </div>
         `;
     });
-    
-    html += `
-        <div class="cart-total">
-            <h3>Итого: ${total}₽</h3>
-            <button class="checkout-btn" onclick="checkout()">✅ Оформить заказ</button>
-        </div>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = html;
-}
-
-function updateQuantity(index, delta) {
-    const newQty = cart[index].quantity + delta;
-    if (newQty <= 0) {
-        cart.splice(index, 1);
-    } else {
-        cart[index].quantity = newQty;
-    }
-    saveCart();
-    renderCartPage();
-}
-
-function removeCartItem(index) {
-    cart.splice(index, 1);
-    saveCart();
-    renderCartPage();
-}
-
-// Рендер контактов
-function renderContactsPage() {
-    const data = window.shopData;
-    const html = `
-        <div class="contacts-page">
-            <h2 class="section-title">📞 Контакты</h2>
-            <div class="contact-phone">${data?.contactPhone || '+7 (999) 123-45-67'}</div>
-            <p>Свяжитесь с нами любым удобным способом</p>
-            <p style="margin-top:20px; color:#888">Работаем ежедневно 10:00-21:00</p>
-        </div>
-    `;
-    document.getElementById('mainContent').innerHTML = html;
-}
-
-// Поиск
-function setupSearch() {
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            if (currentPage === 'shop') renderShopPage();
-        });
-    }
-}
-
-// Навигация
-function setupNavigation() {
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const page = btn.dataset.page;
-            currentPage = page;
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            switch(page) {
-                case 'shop': renderShopPage(); break;
-                case 'sales': renderSalesPage(); break;
-                case 'cart': renderCartPage(); break;
-                case 'contacts': renderContactsPage(); break;
-            }
-        });
-    });
-}
-
-// Главный рендер
-function render() {
-    renderShopPage();
-    setupSearch();
-    setupNavigation();
-    updateCartBadge();
-}
-
-// Запуск
-loadData();
+    html += `</div><div class="cart-total"><h3>Итого: ${total}₽</h3><button class="checkout-btn" id="checkoutBtn">✅ Оформить заказ</button></div>`;
+   
