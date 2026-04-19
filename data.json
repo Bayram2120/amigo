@@ -20,7 +20,7 @@
             "resistances": null,
             "sale": false,
             "salePrice": null,
-            "photo": "https://placehold.co/300x200/FFD700/000?text=Жидкость",
+            "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
             "popular": true
         },
         {
@@ -38,7 +38,7 @@
             "resistances": null,
             "sale": true,
             "salePrice": 1490,
-            "photo": "https://placehold.co/300x200/FFD700/000?text=Pod",
+            "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
             "popular": true
         },
         {
@@ -56,7 +56,7 @@
             "resistances": ["0.6 Ом", "0.8 Ом", "1.0 Ом", "1.2 Ом"],
             "sale": false,
             "salePrice": null,
-            "photo": "https://placehold.co/300x200/FFD700/000?text=Испаритель",
+            "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
             "popular": false
         },
         {
@@ -74,7 +74,7 @@
             "resistances": ["0.8 Ом", "1.0 Ом", "1.2 Ом"],
             "sale": true,
             "salePrice": 340,
-            "photo": "https://placehold.co/300x200/FFD700/000?text=Картридж",
+            "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
             "popular": false
         },
         {
@@ -92,7 +92,7 @@
             "resistances": null,
             "sale": false,
             "salePrice": null,
-            "photo": "https://placehold.co/300x200/FFD700/000?text=Электронка",
+            "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
             "popular": true
         }
     ]
