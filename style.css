@@ -38,17 +38,6 @@ body {
 .logo {
     width: 40px;
     height: 40px;
-    background: #FFD700;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.logo img {
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -214,6 +203,7 @@ body {
     margin-top: auto;
 }
 
+/* МОДАЛЬНОЕ ОКНО */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -317,6 +307,7 @@ body {
     cursor: pointer;
     text-align: left;
     font-size: 14px;
+    transition: all 0.2s;
 }
 
 .range-btn.selected {
@@ -329,7 +320,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .variant-option {
@@ -339,11 +330,59 @@ body {
     cursor: pointer;
     background: white;
     font-size: 14px;
+    transition: all 0.2s;
 }
 
 .variant-option.selected {
     background: #1a1a2e;
     color: #FFD700;
+    border-color: #1a1a2e;
+}
+
+/* Количество товара */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f5f5f5;
+    padding: 12px 16px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.quantity-selector label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1a1a2e;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quantity-btn-modal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.quantity-btn-modal:active {
+    transform: scale(0.95);
+}
+
+.quantity-value {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
 }
 
 .add-to-cart-btn {
@@ -357,6 +396,7 @@ body {
     width: 100%;
     cursor: pointer;
     margin-top: 10px;
+    transition: opacity 0.2s;
 }
 
 .add-to-cart-btn.disabled {
@@ -364,6 +404,7 @@ body {
     cursor: not-allowed;
 }
 
+/* КОРЗИНА */
 .cart-items-list {
     max-height: 60vh;
     overflow-y: auto;
