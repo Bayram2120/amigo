@@ -19,7 +19,6 @@ body {
     padding-bottom: 70px;
 }
 
-/* ШАПКА */
 .header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     padding: 15px;
@@ -51,10 +50,8 @@ body {
     color: #FFD700;
     font-size: 22px;
     font-weight: bold;
-    letter-spacing: 1px;
 }
 
-/* ПОИСК */
 .search-container {
     padding: 12px 15px;
     background: white;
@@ -71,7 +68,6 @@ body {
     border-radius: 30px;
     font-size: 16px;
     outline: none;
-    transition: all 0.3s;
 }
 
 .search-input:focus {
@@ -79,13 +75,11 @@ body {
     box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
 }
 
-/* ОСНОВНОЙ КОНТЕНТ */
 .main-content {
     padding: 15px;
     min-height: calc(100vh - 140px);
 }
 
-/* ЗАГОЛОВКИ СЕКЦИЙ */
 .section-title {
     font-size: 20px;
     font-weight: bold;
@@ -95,7 +89,6 @@ body {
     padding-left: 12px;
 }
 
-/* КАТЕГОРИИ */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -118,7 +111,6 @@ body {
     color: #FFD700;
 }
 
-/* СЕТКА ТОВАРОВ */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -158,19 +150,21 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Цена и SALE в одной строке */
+/* ===== ГЛАВНОЕ: ЦЕНА И SALE В ОДНОЙ СТРОКЕ ===== */
 .product-price-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
     margin: 5px 0;
+    width: 100%;
 }
 
 .product-price {
     color: #e74c3c;
     font-weight: bold;
     font-size: 16px;
+    line-height: 1.2;
 }
 
 .sale-badge {
@@ -183,6 +177,7 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
 }
+/* =========================================== */
 
 .open-btn {
     background: #1a1a2e;
@@ -196,7 +191,6 @@ body {
     margin-top: 8px;
 }
 
-/* МОДАЛЬНОЕ ОКНО */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -250,7 +244,6 @@ body {
     color: white;
     font-size: 28px;
     cursor: pointer;
-    line-height: 1;
 }
 
 .modal-body {
@@ -261,10 +254,6 @@ body {
     width: 100%;
     border-radius: 16px;
     margin-bottom: 15px;
-}
-
-.step-container {
-    margin-top: 20px;
 }
 
 .step-title {
@@ -304,7 +293,6 @@ body {
     background: white;
     cursor: pointer;
     text-align: left;
-    transition: all 0.2s;
     font-size: 14px;
 }
 
@@ -328,13 +316,11 @@ body {
     cursor: pointer;
     background: white;
     font-size: 14px;
-    transition: all 0.2s;
 }
 
 .variant-option.selected {
     background: #1a1a2e;
     color: #FFD700;
-    border-color: #1a1a2e;
 }
 
 .add-to-cart-btn {
@@ -347,7 +333,6 @@ body {
     font-weight: bold;
     width: 100%;
     cursor: pointer;
-    transition: opacity 0.2s;
     margin-top: 10px;
 }
 
@@ -356,7 +341,6 @@ body {
     cursor: not-allowed;
 }
 
-/* КОРЗИНА */
 .cart-items-list {
     max-height: 60vh;
     overflow-y: auto;
@@ -369,7 +353,6 @@ body {
     align-items: center;
     padding: 12px;
     border-bottom: 1px solid #eee;
-    background: white;
 }
 
 .cart-item-info {
@@ -416,7 +399,6 @@ body {
     color: #ff4444;
     font-size: 20px;
     cursor: pointer;
-    margin-left: 8px;
 }
 
 .cart-total {
@@ -445,7 +427,6 @@ body {
     color: #888;
 }
 
-/* НИЖНЕЕ МЕНЮ */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -458,7 +439,6 @@ body {
     justify-content: space-around;
     padding: 10px 0 20px;
     border-top: 1px solid #eee;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     z-index: 100;
 }
 
@@ -495,7 +475,6 @@ body {
     padding: 0 4px;
 }
 
-/* СТРАНИЦА КОНТАКТОВ */
 .contacts-page {
     text-align: center;
     padding: 30px 20px;
@@ -508,18 +487,12 @@ body {
     margin: 20px 0;
 }
 
-/* АДАПТАЦИЯ */
 @media (max-width: 480px) {
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 12px;
     }
-    
     .modal-content {
         margin: 50px 12px 20px;
-    }
-    
-    .cart-item-title {
-        font-size: 13px;
     }
 }
