@@ -217,12 +217,24 @@ function openProductModal(product) {
                             <button class="quantity-btn-modal" id="increaseQty">+</button>
                         </div>
                     </div>
+                    <div class="total-amount" id="totalAmount">
+                        Итого: <span id="totalSum">0</span> ₽
+                    </div>
                 </div>
                 <button class="add-to-cart-btn disabled" id="addToCartBtn">⬅️ Сначала выберите сумму</button>
             </div>
         </div>
     `;
     modal.style.display = 'block';
+    
+    function updateTotalDisplay() {
+        const totalSpan = document.getElementById('totalSum');
+        if (totalSpan && selectedPrice) {
+            totalSpan.textContent = selectedPrice * selectedQuantity;
+        } else if (totalSpan) {
+            totalSpan.textContent = '0';
+        }
+    }
     
     function resetVariantSelection() {
         selectedVariant = null;
@@ -240,6 +252,33 @@ function openProductModal(product) {
         if (step2Container && step2Container.style.display === 'block') {
             addBtn.textContent = '⬅️ Выберите вариант';
         }
+    }
+    
+    function setupQuantityButtons() {
+        const decreaseBtn = document.getElementById('decreaseQty');
+        const increaseBtn = document.getElementById('increaseQty');
+        const quantitySpan = document.getElementById('quantityValue');
+        
+        if (decreaseBtn && increaseBtn && quantitySpan) {
+            const newDecreaseBtn = decreaseBtn.cloneNode(true);
+            const newIncreaseBtn = increaseBtn.cloneNode(true);
+            decreaseBtn.parentNode.replaceChild(newDecreaseBtn, decreaseBtn);
+            increaseBtn.parentNode.replaceChild(newIncreaseBtn, increaseBtn);
+            
+            newDecreaseBtn.onclick = () => {
+                if (selectedQuantity > 1) {
+                    selectedQuantity--;
+                    quantitySpan.textContent = selectedQuantity;
+                    updateTotalDisplay();
+                }
+            };
+            newIncreaseBtn.onclick = () => {
+                selectedQuantity++;
+                quantitySpan.textContent = selectedQuantity;
+                updateTotalDisplay();
+            };
+        }
+        updateTotalDisplay();
     }
     
     document.querySelectorAll('.range-btn').forEach(btn => {
@@ -299,25 +338,6 @@ function openProductModal(product) {
                 });
             });
         }, 50);
-    }
-    
-    function setupQuantityButtons() {
-        const decreaseBtn = document.getElementById('decreaseQty');
-        const increaseBtn = document.getElementById('increaseQty');
-        const quantitySpan = document.getElementById('quantityValue');
-        
-        if (decreaseBtn && increaseBtn && quantitySpan) {
-            decreaseBtn.onclick = () => {
-                if (selectedQuantity > 1) {
-                    selectedQuantity--;
-                    quantitySpan.textContent = selectedQuantity;
-                }
-            };
-            increaseBtn.onclick = () => {
-                selectedQuantity++;
-                quantitySpan.textContent = selectedQuantity;
-            };
-        }
     }
     
     const addBtn = document.getElementById('addToCartBtn');
@@ -428,7 +448,11 @@ function renderSalesPage() {
 
 function renderCartPage() {
     if (!cart.length) { 
-        document.getElementById('mainContent').innerHTML = '<div class="empty-cart">🛒 Корзина пуста</div>'; 
+        document.getElementById('mainContent').innerHTML = `
+            <div style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+                <div class="empty-cart">🛒 Корзина пуста</div>
+            </div>
+        `; 
         return; 
     }
     
@@ -493,4 +517,5 @@ function renderContactsPage() {
     `;
 }
 
+// ============ ЗАПУСК ============
 loadData();
