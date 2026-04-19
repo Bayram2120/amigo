@@ -1,0 +1,99 @@
+{
+  "shopName": "AmigoOPT",
+  "contactPhone": "+7 (999) 123-45-67",
+  "managerTgId": "123456789",
+  "botToken": "1043573353",
+  "products": [
+    {
+      "id": 1,
+      "name": "Солевой никотин 20мг",
+      "description": "Насыщенный вкус, 20мг соли",
+      "category": "Жидкости",
+      "priceRanges": {
+        "3000-10000": 450,
+        "30000-100000": 420,
+        "100000-999999": 390
+      },
+      "flavors": [ "Манго", "Клубника", "Мята", "Виноград" ],
+      "colors": null,
+      "resistances": null,
+      "sale": false,
+      "salePrice": null,
+      "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
+      "popular": true
+    },
+    {
+      "id": 2,
+      "name": "Pod-система XROS 4",
+      "description": "Компактная, мощная 1000мАч",
+      "category": "Под-системы",
+      "priceRanges": {
+        "3000-10000": 1890,
+        "30000-100000": 1750,
+        "100000-999999": 1650
+      },
+      "flavors": null,
+      "colors": [ "Чёрный", "Серебристый", "Синий", "Розовый" ],
+      "resistances": null,
+      "sale": true,
+      "salePrice": 1490,
+      "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
+      "popular": true
+    },
+    {
+      "id": 3,
+      "name": "Испаритель 0.8 Ом",
+      "description": "Сетка, отличная передача вкуса",
+      "category": "Испарители",
+      "priceRanges": {
+        "3000-10000": 350,
+        "30000-100000": 320,
+        "100000-999999": 290
+      },
+      "flavors": null,
+      "colors": null,
+      "resistances": [ "0.6 Ом", "0.8 Ом", "1.0 Ом", "1.2 Ом" ],
+      "sale": false,
+      "salePrice": null,
+      "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
+      "popular": false
+    },
+    {
+      "id": 4,
+      "name": "Картридж Caliburn G3",
+      "description": "Сменный картридж, 2ml",
+      "category": "Картриджи",
+      "priceRanges": {
+        "3000-10000": 420,
+        "30000-100000": 390,
+        "100000-999999": 360
+      },
+      "flavors": null,
+      "colors": null,
+      "resistances": [ "0.8 Ом", "1.0 Ом", "1.2 Ом" ],
+      "sale": true,
+      "salePrice": 340,
+      "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
+      "popular": false
+    },
+    {
+      "id": 5,
+      "name": "Электронка Elf Bar",
+      "description": "Одноразовая, 5000 затяжек",
+      "category": "Электронки",
+      "priceRanges": {
+        "3000-10000": 1290,
+        "30000-100000": 1190,
+        "100000-999999": 1090
+      },
+      "flavors": [ "Арбуз", "Ледяная вишня", "Кола", "Клубничный пончик" ],
+      "colors": null,
+      "resistances": null,
+      "sale": false,
+      "salePrice": null,
+      "photo": "https://i.postimg.cc/7LmgJFB6/images.jpg",
+      "popular": true
+    }
+  ],
+  "categories": [ "Электронки", "Жидкости", "Под-системы", "Испарители", "Картриджи" ]
+}
