@@ -5,6 +5,7 @@ let shopConfig = {};
 let cart = [];
 let currentPage = 'shop';
 let currentCategory = 'all';
+let currentPriceRange = null; // Текущий выбранный диапазон для корзины
 
 // Переменные для модального окна
 let currentProduct = null;
@@ -12,6 +13,15 @@ let selectedRange = null;
 let selectedPrice = null;
 let selectedVariant = null;
 let selectedQuantity = 1;
+
+// ============ КОНФИГУРАЦИЯ ЦЕНОВЫХ ДИАПАЗОНОВ ============
+const priceRangesConfig = [
+    { key: '3000-10000', label: '3 000 - 10 000 ₽', minTotal: 3000, maxTotal: 10000 },
+    { key: '10000-30000', label: '10 000 - 30 000 ₽', minTotal: 10000, maxTotal: 30000 },
+    { key: '30000-50000', label: '30 000 - 50 000 ₽', minTotal: 30000, maxTotal: 50000 },
+    { key: '50000-100000', label: '50 000 - 100 000 ₽', minTotal: 50000, maxTotal: 100000 },
+    { key: '100000-999999', label: '100 000+ ₽', minTotal: 100000, maxTotal: 999999 }
+];
 
 // ============ ЗАГРУЗКА ДАННЫХ ============
 async function loadData() {
@@ -36,7 +46,19 @@ async function loadData() {
         };
         
         const savedCart = localStorage.getItem('amigoopt_cart');
-        if (savedCart) cart = JSON.parse(savedCart);
+        if (savedCart) {
+            cart = JSON.parse(savedCart);
+            // Восстанавливаем цены в корзине на основе текущего диапазона
+            if (cart.length > 0 && cart[0].priceRangeKey) {
+                currentPriceRange = cart[0].priceRangeKey;
+                recalcCartPrices();
+            }
+        }
+        
+        const savedRange = localStorage.getItem('amigoopt_price_range');
+        if (savedRange && !currentPriceRange) {
+            currentPriceRange = savedRange;
+        }
         
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.expand();
@@ -86,6 +108,91 @@ function switchPage(page) {
     updateCartBadge();
 }
 
+// ============ ЛОГИКА ПЕРЕСЧЕТА ЦЕН В КОРЗИНЕ ============
+function getPriceForRange(product, rangeKey) {
+    if (product.sale && product.salePrice) return product.salePrice;
+    return product.priceRanges[rangeKey] || Object.values(product.priceRanges)[0];
+}
+
+function getCartTotal() {
+    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+}
+
+function getRangeKeyByTotal(total) {
+    for (const range of priceRangesConfig) {
+        if (total >= range.minTotal && total <= range.maxTotal) {
+            return range.key;
+        }
+    }
+    return '100000-999999';
+}
+
+function recalcCartPrices() {
+    if (!currentPriceRange) return;
+    
+    let changed = false;
+    cart = cart.map(item => {
+        const product = products.find(p => p.id === item.id);
+        if (product) {
+            const newPrice = getPriceForRange(product, currentPriceRange);
+            if (item.price !== newPrice) {
+                changed = true;
+                return { ...item, price: newPrice, priceRangeKey: currentPriceRange };
+            }
+            return { ...item, priceRangeKey: currentPriceRange };
+        }
+        return item;
+    });
+    
+    if (changed) {
+        saveCart();
+        if (currentPage === 'cart') renderCartPage();
+        updateCartBadge();
+    }
+}
+
+function updateCartPricesForNewRange(newRangeKey) {
+    const oldRange = currentPriceRange;
+    currentPriceRange = newRangeKey;
+    localStorage.setItem('amigoopt_price_range', newRangeKey);
+    
+    let changed = false;
+    cart = cart.map(item => {
+        const product = products.find(p => p.id === item.id);
+        if (product) {
+            const newPrice = getPriceForRange(product, newRangeKey);
+            if (item.price !== newPrice) {
+                changed = true;
+                return { ...item, price: newPrice, priceRangeKey: newRangeKey };
+            }
+            return { ...item, priceRangeKey: newRangeKey };
+        }
+        return item;
+    });
+    
+    if (changed) {
+        saveCart();
+        if (currentPage === 'cart') renderCartPage();
+        updateCartBadge();
+        return true;
+    }
+    return false;
+}
+
+function checkAndUpdateRangeByTotal() {
+    const total = getCartTotal();
+    const newRangeKey = getRangeKeyByTotal(total);
+    
+    if (newRangeKey !== currentPriceRange) {
+        currentPriceRange = newRangeKey;
+        localStorage.setItem('amigoopt_price_range', newRangeKey);
+        recalcCartPrices();
+        return true;
+    }
+    return false;
+}
+
+// ============ КОРЗИНА ============
 function saveCart() {
     localStorage.setItem('amigoopt_cart', JSON.stringify(cart));
     updateCartBadge();
@@ -107,6 +214,7 @@ function getVariantType(product) {
     return null;
 }
 
+// ============ ОТПРАВКА В TELEGRAM ============
 async function sendOrderToTelegram(orderText) {
     if (!shopConfig.botToken || shopConfig.botToken === "ВАШ_ТОКЕН_БОТА") {
         console.log('Бот не настроен');
@@ -157,11 +265,14 @@ function checkout() {
     sendOrderToTelegram(order);
     alert('✅ Заказ оформлен! Менеджер свяжется с вами.');
     cart = [];
+    currentPriceRange = null;
+    localStorage.removeItem('amigoopt_price_range');
     saveCart();
     if (currentPage === 'cart') renderCartPage();
     updateCartBadge();
 }
 
+// ============ МОДАЛЬНОЕ ОКНО ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
@@ -170,15 +281,21 @@ function openProductModal(product) {
     selectedQuantity = 1;
     
     const variantInfo = getVariantType(product);
-    const rangeMap = { 
-        '3000-10000': '3 000 - 10 000 ₽', 
-        '30000-100000': '30 000 - 100 000 ₽', 
-        '100000-999999': '100 000+ ₽' 
+    const rangeMap = {
+        '3000-10000': '3 000 - 10 000 ₽',
+        '10000-30000': '10 000 - 30 000 ₽',
+        '30000-50000': '30 000 - 50 000 ₽',
+        '50000-100000': '50 000 - 100 000 ₽',
+        '100000-999999': '100 000+ ₽'
     };
     
+    // Показываем только те диапазоны, которые есть у товара
     let rangesHtml = '<div class="range-options">';
-    for (const [range, price] of Object.entries(product.priceRanges)) {
-        rangesHtml += `<button class="range-btn" data-range="${range}" data-price="${price}">${rangeMap[range] || range} — ${price}₽/шт</button>`;
+    for (const range of priceRangesConfig) {
+        if (product.priceRanges[range.key]) {
+            const price = product.priceRanges[range.key];
+            rangesHtml += `<button class="range-btn" data-range="${range.key}" data-price="${price}">${rangeMap[range.key] || range.label} — ${price}₽/шт</button>`;
+        }
     }
     rangesHtml += '</div>';
     
@@ -358,14 +475,34 @@ function openProductModal(product) {
             price: selectedPrice,
             selectedRange: selectedRange,
             selectedVariant: selectedVariant || null,
-            quantity: selectedQuantity
+            quantity: selectedQuantity,
+            priceRangeKey: selectedRange
         });
+        
         saveCart();
+        
+        // Проверяем и обновляем диапазон корзины
+        const total = getCartTotal();
+        const newRangeKey = getRangeKeyByTotal(total);
+        
+        if (newRangeKey !== currentPriceRange) {
+            currentPriceRange = newRangeKey;
+            localStorage.setItem('amigoopt_price_range', newRangeKey);
+            recalcCartPrices();
+            alert(`✅ Товар добавлен!\n\n📊 Ваша корзина теперь в диапазоне ${getRangeLabel(newRangeKey)}. Цены пересчитаны.`);
+        } else {
+            alert('✅ Товар добавлен в корзину');
+        }
+        
         closeModal();
-        alert('✅ Товар добавлен в корзину');
         if (currentPage === 'cart') renderCartPage();
         updateCartBadge();
     };
+}
+
+function getRangeLabel(rangeKey) {
+    const range = priceRangesConfig.find(r => r.key === rangeKey);
+    return range ? range.label : rangeKey;
 }
 
 function closeModal() {
@@ -381,7 +518,13 @@ function escapeHtml(text) {
 }
 
 function renderProductCard(product) {
-    const displayPrice = product.sale ? product.salePrice : Object.values(product.priceRanges)[0];
+    let displayPrice;
+    if (currentPriceRange && product.priceRanges[currentPriceRange]) {
+        displayPrice = product.sale ? product.salePrice : product.priceRanges[currentPriceRange];
+    } else {
+        displayPrice = product.sale ? product.salePrice : Object.values(product.priceRanges)[0];
+    }
+    
     const productJson = JSON.stringify(product).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
     
     const rightContent = product.sale 
@@ -422,6 +565,10 @@ function renderShopPage() {
     });
     html += `</div>`;
     
+    if (currentPriceRange && cart.length > 0) {
+        html += `<div class="range-notification">📊 Ваша корзина в диапазоне: ${getRangeLabel(currentPriceRange)}</div>`;
+    }
+    
     if (popular.length) html += `<h2 class="section-title">⭐ Популярное</h2><div class="products-grid">${popular.map(p => renderProductCard(p)).join('')}</div>`;
     if (other.length) html += `<h2 class="section-title">📦 Все товары</h2><div class="products-grid">${other.map(p => renderProductCard(p)).join('')}</div>`;
     if (!filtered.length) html = `<div style="text-align:center;padding:50px">🔍 Ничего не найдено</div>`;
@@ -456,11 +603,15 @@ function renderCartPage() {
         return; 
     }
     
-    let html = `<h2 class="section-title">🛒 Корзина</h2><div class="cart-items-list">`;
-    let total = 0;
+    let total = getCartTotal();
+    const currentRangeLabel = currentPriceRange ? getRangeLabel(currentPriceRange) : 'не выбран';
+    
+    let html = `<h2 class="section-title">🛒 Корзина</h2>`;
+    html += `<div class="range-notification">📊 Текущий ценовой диапазон: <strong>${currentRangeLabel}</strong><br>💰 Сумма корзины: ${total} ₽</div>`;
+    html += `<div class="cart-items-list">`;
+    
     cart.forEach((item, idx) => {
         const itemTotal = item.price * item.quantity;
-        total += itemTotal;
         html += `
             <div class="cart-item">
                 <div class="cart-item-info">
@@ -488,8 +639,15 @@ function renderCartPage() {
             if (newQty <= 0) cart.splice(idx, 1);
             else cart[idx].quantity = newQty;
             saveCart();
+            
+            // Проверяем и обновляем диапазон после изменения количества
+            const wasUpdated = checkAndUpdateRangeByTotal();
+            if (wasUpdated) {
+                alert(`📊 Сумма корзины изменилась. Цены пересчитаны для диапазона ${getRangeLabel(currentPriceRange)}`);
+            }
             renderCartPage();
             updateCartBadge();
+            if (currentPage === 'shop') renderShopPage();
         });
     });
     
@@ -497,8 +655,10 @@ function renderCartPage() {
         btn.addEventListener('click', () => { 
             cart.splice(parseInt(btn.dataset.idx), 1); 
             saveCart(); 
+            checkAndUpdateRangeByTotal();
             renderCartPage(); 
-            updateCartBadge(); 
+            updateCartBadge();
+            if (currentPage === 'shop') renderShopPage();
         });
     });
     
