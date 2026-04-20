@@ -246,12 +246,14 @@ body {
     background: #1a1a2e;
     color: white;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .modal-header h3 {
     font-size: 18px;
+    flex: 1;
+    text-align: center;
 }
 
 .close-modal {
@@ -260,6 +262,25 @@ body {
     color: white;
     font-size: 28px;
     cursor: pointer;
+    line-height: 1;
+    padding: 0 10px;
+}
+
+.back-modal-btn {
+    background: none;
+    border: none;
+    color: #FFD700;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-modal-btn:hover {
+    background: rgba(255,215,0,0.1);
 }
 
 .modal-body {
@@ -421,7 +442,6 @@ body {
     cursor: not-allowed;
 }
 
-/* КОРЗИНА - исправлено */
 .cart-items-list {
     max-height: 55vh;
     overflow-y: auto;
@@ -502,7 +522,6 @@ body {
     margin-top: 12px;
 }
 
-/* Пустая корзина - центрируем */
 .empty-cart {
     text-align: center;
     padding: 80px 20px;
@@ -568,7 +587,6 @@ body {
     padding: 0 4px;
 }
 
-/* СТРАНИЦА КОНТАКТОВ - исправлено */
 .contacts-page {
     text-align: center;
     padding: 20px 20px 30px;
