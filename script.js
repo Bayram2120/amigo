@@ -522,13 +522,10 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// ============ ГЛАВНОЕ: НА КАРТОЧКАХ ВСЕГДА ЦЕНА ИЗ ДИАПАЗОНА 100000-999999 ============
 function renderProductCard(product) {
-    let displayPrice;
-    if (currentPriceRange && product.priceRanges[currentPriceRange]) {
-        displayPrice = product.priceRanges[currentPriceRange];
-    } else {
-        displayPrice = Object.values(product.priceRanges)[0];
-    }
+    // ВСЕГДА показываем цену из диапазона 100000-999999 (самая низкая цена для привлечения)
+    let displayPrice = product.priceRanges['100000-999999'] || Object.values(product.priceRanges)[0];
     
     const productJson = JSON.stringify(product).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
     
