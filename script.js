@@ -341,16 +341,12 @@ function openCheckoutForm() {
                         <input type="text" id="city" placeholder="Москва" required>
                     </div>
                     <div class="form-group">
-                        <label>Адрес доставки *</label>
-                        <textarea id="address" placeholder="Улица, дом, квартира/офис" required></textarea>
+                        <label>Адрес доставки (СДЭК/Почта) *</label>
+                        <textarea id="address" placeholder="Индекс, город, улица, дом, квартира" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Номер телефона *</label>
                         <input type="tel" id="phone" placeholder="+7 (999) 123-45-67" value="${userInfo.userPhone !== 'Не указан' ? userInfo.userPhone : ''}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email (для отправки чека)</label>
-                        <input type="email" id="email" placeholder="example@mail.ru">
                     </div>
                     <div class="form-group">
                         <label>Комментарий к заказу</label>
@@ -380,7 +376,6 @@ function submitOrder() {
     const city = document.getElementById('city')?.value.trim();
     const address = document.getElementById('address')?.value.trim();
     const phone = document.getElementById('phone')?.value.trim();
-    const email = document.getElementById('email')?.value.trim();
     const comment = document.getElementById('comment')?.value.trim();
     
     if (!fullName) { alert('Введите ФИО'); return; }
@@ -396,9 +391,8 @@ function submitOrder() {
     order += `━━━━━━━━━━━━━━━━\n`;
     order += `👤 <b>ФИО:</b> ${fullName}\n`;
     order += `🏙️ <b>Город:</b> ${city}\n`;
-    order += `📍 <b>Адрес:</b> ${address}\n`;
+    order += `📍 <b>Адрес доставки:</b> ${address}\n`;
     order += `📞 <b>Телефон:</b> ${phone}\n`;
-    if (email) order += `📧 <b>Email:</b> ${email}\n`;
     order += `📱 <b>Telegram:</b> ${userInfo.userUsername}\n`;
     order += `🆔 <b>Telegram ID:</b> <code>${userInfo.userId}</code>\n`;
     if (comment) order += `💬 <b>Комментарий:</b> ${comment}\n`;
@@ -434,10 +428,6 @@ function submitOrder() {
     closeCheckoutModal();
     if (currentPage === 'cart') renderCartPage();
     updateCartBadge();
-    
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.close();
-    }
 }
 
 // ============ МОДАЛЬНОЕ ОКНО ТОВАРА ============
