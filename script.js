@@ -33,6 +33,7 @@ function getUserInfo() {
     let userName = 'Неизвестный';
     let userId = 'Неизвестно';
     let userUsername = 'Нет username';
+    let userPhone = 'Не указан';
     
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
         const user = window.Telegram.WebApp.initDataUnsafe.user;
@@ -47,18 +48,19 @@ function getUserInfo() {
     }
     
     const savedUser = localStorage.getItem('amigoopt_user_info');
-    if (!userName || userName === 'Неизвестный') {
-        if (savedUser) {
-            const parsed = JSON.parse(savedUser);
+    if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        if (parsed.userPhone) userPhone = parsed.userPhone;
+        if (!userName || userName === 'Неизвестный') {
             userName = parsed.userName;
             userUsername = parsed.userUsername;
         }
     }
     
-    return { userName, userId, userUsername };
+    return { userName, userId, userUsername, userPhone };
 }
 
-function saveUserInfo() {
+function saveUserInfo(phoneNumber = null) {
     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
         const user = window.Telegram.WebApp.initDataUnsafe.user;
         if (user) {
@@ -66,10 +68,18 @@ function saveUserInfo() {
             if (user.last_name) userName += ' ' + user.last_name;
             if (!userName.trim()) userName = 'Пользователь';
             
+            const existing = localStorage.getItem('amigoopt_user_info');
+            let existingPhone = null;
+            if (existing) {
+                const parsed = JSON.parse(existing);
+                existingPhone = parsed.userPhone;
+            }
+            
             const userInfo = {
                 userName: userName,
                 userId: user.id,
-                userUsername: user.username ? '@' + user.username : 'Нет username'
+                userUsername: user.username ? '@' + user.username : 'Нет username',
+                userPhone: phoneNumber || existingPhone || 'Не указан'
             };
             localStorage.setItem('amigoopt_user_info', JSON.stringify(userInfo));
         }
@@ -304,45 +314,133 @@ async function sendOrderToTelegram(orderText) {
     }
 }
 
-function checkout() {
-    if (cart.length === 0) { 
-        alert('Корзина пуста'); 
-        return; 
+// ============ ФОРМА ОФОРМЛЕНИЯ ЗАКАЗА ============
+function openCheckoutForm() {
+    if (cart.length === 0) {
+        alert('Корзина пуста');
+        return;
     }
     
     const userInfo = getUserInfo();
     
+    const modal = document.getElementById('checkoutModal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Оформление заказа</h3>
+                <button class="close-modal" onclick="closeCheckoutModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="orderForm" class="checkout-form">
+                    <div class="form-group">
+                        <label>ФИО *</label>
+                        <input type="text" id="fullName" placeholder="Иванов Иван Иванович" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Город *</label>
+                        <input type="text" id="city" placeholder="Москва" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес доставки *</label>
+                        <textarea id="address" placeholder="Улица, дом, квартира/офис" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Номер телефона *</label>
+                        <input type="tel" id="phone" placeholder="+7 (999) 123-45-67" value="${userInfo.userPhone !== 'Не указан' ? userInfo.userPhone : ''}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email (для отправки чека)</label>
+                        <input type="email" id="email" placeholder="example@mail.ru">
+                    </div>
+                    <div class="form-group">
+                        <label>Комментарий к заказу</label>
+                        <textarea id="comment" placeholder="Дополнительная информация..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-order-btn">✅ Подтвердить заказ</button>
+                </form>
+            </div>
+        </div>
+    `;
+    modal.style.display = 'block';
+    
+    const form = document.getElementById('orderForm');
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        submitOrder();
+    };
+}
+
+function closeCheckoutModal() {
+    document.getElementById('checkoutModal').style.display = 'none';
+    document.getElementById('checkoutModal').innerHTML = '';
+}
+
+function submitOrder() {
+    const fullName = document.getElementById('fullName')?.value.trim();
+    const city = document.getElementById('city')?.value.trim();
+    const address = document.getElementById('address')?.value.trim();
+    const phone = document.getElementById('phone')?.value.trim();
+    const email = document.getElementById('email')?.value.trim();
+    const comment = document.getElementById('comment')?.value.trim();
+    
+    if (!fullName) { alert('Введите ФИО'); return; }
+    if (!city) { alert('Введите город'); return; }
+    if (!address) { alert('Введите адрес доставки'); return; }
+    if (!phone) { alert('Введите номер телефона'); return; }
+    
+    const userInfo = getUserInfo();
+    
     let order = '🛍️ <b>НОВЫЙ ЗАКАЗ</b>\n\n';
-    order += `👤 <b>Покупатель:</b> ${userInfo.userName}\n`;
+    order += `━━━━━━━━━━━━━━━━\n`;
+    order += `<b>📋 ДАННЫЕ ПОКУПАТЕЛЯ</b>\n`;
+    order += `━━━━━━━━━━━━━━━━\n`;
+    order += `👤 <b>ФИО:</b> ${fullName}\n`;
+    order += `🏙️ <b>Город:</b> ${city}\n`;
+    order += `📍 <b>Адрес:</b> ${address}\n`;
+    order += `📞 <b>Телефон:</b> ${phone}\n`;
+    if (email) order += `📧 <b>Email:</b> ${email}\n`;
+    order += `📱 <b>Telegram:</b> ${userInfo.userUsername}\n`;
     order += `🆔 <b>Telegram ID:</b> <code>${userInfo.userId}</code>\n`;
-    order += `📱 <b>Username:</b> ${userInfo.userUsername}\n`;
+    if (comment) order += `💬 <b>Комментарий:</b> ${comment}\n`;
     order += `━━━━━━━━━━━━━━━━\n\n`;
+    
+    order += `<b>🛒 СОСТАВ ЗАКАЗА</b>\n`;
+    order += `━━━━━━━━━━━━━━━━\n`;
     
     let total = 0;
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        order += `📦 ${item.name}\n   💰 ${item.price}₽ × ${item.quantity} = ${itemTotal}₽\n`;
-        if (item.selectedRange) order += `   📊 Выбранный диапазон: ${item.selectedRange}\n`;
-        if (item.appliedRange) order += `   📊 Диапазон корзины: ${getRangeLabel(item.appliedRange)}\n`;
+        order += `📦 ${item.name}\n`;
+        order += `   💰 ${item.price}₽ × ${item.quantity} = ${itemTotal}₽\n`;
+        if (item.selectedRange) order += `   📊 ${item.selectedRange}\n`;
         if (item.selectedVariant) order += `   🎨 ${item.selectedVariant}\n`;
         order += `\n`;
     });
+    
     order += `━━━━━━━━━━━━━━━━\n`;
-    order += `<b>ИТОГО: ${total}₽</b>\n\n`;
+    order += `<b>💰 ИТОГО: ${total}₽</b>\n\n`;
     order += `📅 ${new Date().toLocaleString('ru-RU')}`;
     
     sendOrderToTelegram(order);
-    alert('✅ Заказ оформлен! Менеджер свяжется с вами.');
+    
+    alert('✅ Заказ оформлен! Менеджер свяжется с вами в ближайшее время.');
+    
     cart = [];
     currentPriceRange = null;
     localStorage.removeItem('amigoopt_price_range');
     saveCart();
+    
+    closeCheckoutModal();
     if (currentPage === 'cart') renderCartPage();
     updateCartBadge();
+    
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+    }
 }
 
-// ============ МОДАЛЬНОЕ ОКНО ============
+// ============ МОДАЛЬНОЕ ОКНО ТОВАРА ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
@@ -724,7 +822,7 @@ function renderCartPage() {
         });
     });
     
-    document.getElementById('checkoutBtn')?.addEventListener('click', checkout);
+    document.getElementById('checkoutBtn')?.addEventListener('click', openCheckoutForm);
 }
 
 function renderContactsPage() {
