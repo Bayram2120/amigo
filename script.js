@@ -28,6 +28,54 @@ function getRangeLabel(rangeKey) {
     return range ? range.label : rangeKey;
 }
 
+// ============ ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ПОЛЬЗОВАТЕЛЕ ============
+function getUserInfo() {
+    let userName = 'Неизвестный';
+    let userId = 'Неизвестно';
+    let userUsername = 'Нет username';
+    
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+        const user = window.Telegram.WebApp.initDataUnsafe.user;
+        if (user) {
+            userName = user.first_name || '';
+            if (user.last_name) userName += ' ' + user.last_name;
+            if (!userName.trim()) userName = 'Пользователь';
+            
+            userId = user.id || 'Неизвестно';
+            userUsername = user.username ? '@' + user.username : 'Нет username';
+        }
+    }
+    
+    const savedUser = localStorage.getItem('amigoopt_user_info');
+    if (!userName || userName === 'Неизвестный') {
+        if (savedUser) {
+            const parsed = JSON.parse(savedUser);
+            userName = parsed.userName;
+            userUsername = parsed.userUsername;
+        }
+    }
+    
+    return { userName, userId, userUsername };
+}
+
+function saveUserInfo() {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+        const user = window.Telegram.WebApp.initDataUnsafe.user;
+        if (user) {
+            let userName = user.first_name || '';
+            if (user.last_name) userName += ' ' + user.last_name;
+            if (!userName.trim()) userName = 'Пользователь';
+            
+            const userInfo = {
+                userName: userName,
+                userId: user.id,
+                userUsername: user.username ? '@' + user.username : 'Нет username'
+            };
+            localStorage.setItem('amigoopt_user_info', JSON.stringify(userInfo));
+        }
+    }
+}
+
 // ============ ЗАГРУЗКА ДАННЫХ ============
 async function loadData() {
     try {
@@ -82,6 +130,8 @@ async function loadData() {
 }
 
 function initApp() {
+    saveUserInfo();
+    
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => switchPage(btn.dataset.page));
     });
@@ -108,7 +158,6 @@ function switchPage(page) {
     else if (page === 'cart') renderCartPage();
     else if (page === 'contacts') renderContactsPage();
     
-    // Скролл к верху при смене страницы
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const mainContent = document.getElementById('mainContent');
     if (mainContent) mainContent.scrollTop = 0;
@@ -225,7 +274,7 @@ function getVariantType(product) {
     return null;
 }
 
-// ============ ОТПРАВКА В TELEGRAM ============
+// ============ ОТПРАВКА ЗАКАЗА В TELEGRAM ============
 async function sendOrderToTelegram(orderText) {
     if (!shopConfig.botToken || shopConfig.botToken === "ВАШ_ТОКЕН_БОТА") {
         console.log('Бот не настроен');
@@ -261,7 +310,14 @@ function checkout() {
         return; 
     }
     
+    const userInfo = getUserInfo();
+    
     let order = '🛍️ <b>НОВЫЙ ЗАКАЗ</b>\n\n';
+    order += `👤 <b>Покупатель:</b> ${userInfo.userName}\n`;
+    order += `🆔 <b>Telegram ID:</b> <code>${userInfo.userId}</code>\n`;
+    order += `📱 <b>Username:</b> ${userInfo.userUsername}\n`;
+    order += `━━━━━━━━━━━━━━━━\n\n`;
+    
     let total = 0;
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
@@ -272,7 +328,9 @@ function checkout() {
         if (item.selectedVariant) order += `   🎨 ${item.selectedVariant}\n`;
         order += `\n`;
     });
-    order += `━━━━━━━━━━━━━━━━\n<b>ИТОГО: ${total}₽</b>`;
+    order += `━━━━━━━━━━━━━━━━\n`;
+    order += `<b>ИТОГО: ${total}₽</b>\n\n`;
+    order += `📅 ${new Date().toLocaleString('ru-RU')}`;
     
     sendOrderToTelegram(order);
     alert('✅ Заказ оформлен! Менеджер свяжется с вами.');
@@ -284,7 +342,7 @@ function checkout() {
     updateCartBadge();
 }
 
-// ============ МОДАЛЬНОЕ ОКНО С КНОПКОЙ НАЗАД ============
+// ============ МОДАЛЬНОЕ ОКНО ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
@@ -356,7 +414,6 @@ function openProductModal(product) {
     `;
     modal.style.display = 'block';
     
-    // Кнопка "Назад" - закрывает модальное окно
     const backBtn = document.getElementById('backModalBtn');
     if (backBtn) {
         backBtn.onclick = () => {
@@ -522,9 +579,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ============ ГЛАВНОЕ: НА КАРТОЧКАХ ВСЕГДА ЦЕНА ИЗ ДИАПАЗОНА 100000-999999 ============
 function renderProductCard(product) {
-    // ВСЕГДА показываем цену из диапазона 100000-999999 (самая низкая цена для привлечения)
     let displayPrice = product.priceRanges['100000-999999'] || Object.values(product.priceRanges)[0];
     
     const productJson = JSON.stringify(product).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
