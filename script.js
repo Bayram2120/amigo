@@ -108,12 +108,16 @@ function switchPage(page) {
     else if (page === 'cart') renderCartPage();
     else if (page === 'contacts') renderContactsPage();
     
+    // Скролл к верху при смене страницы
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const mainContent = document.getElementById('mainContent');
+    if (mainContent) mainContent.scrollTop = 0;
+    
     updateCartBadge();
 }
 
 // ============ ЛОГИКА ПЕРЕСЧЕТА ЦЕН ============
 function getPriceForRange(product, rangeKey) {
-    if (product.sale && product.salePrice) return product.salePrice;
     return product.priceRanges[rangeKey] || Object.values(product.priceRanges)[0];
 }
 
@@ -280,7 +284,7 @@ function checkout() {
     updateCartBadge();
 }
 
-// ============ МОДАЛЬНОЕ ОКНО ============
+// ============ МОДАЛЬНОЕ ОКНО С КНОПКОЙ НАЗАД ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
@@ -297,7 +301,6 @@ function openProductModal(product) {
         '100000-999999': '100 000+ ₽'
     };
     
-    // Показываем ВСЕ 5 диапазонов
     let rangesHtml = '<div class="range-options">';
     for (const range of priceRangesConfig) {
         const price = product.priceRanges[range.key];
@@ -321,7 +324,8 @@ function openProductModal(product) {
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
-                <h3>${product.name}</h3>
+                <button class="back-modal-btn" id="backModalBtn">← Назад</button>
+                <h3 id="modalTitle">${product.name}</h3>
                 <button class="close-modal" onclick="closeModal()">×</button>
             </div>
             <div class="modal-body">
@@ -352,6 +356,14 @@ function openProductModal(product) {
     `;
     modal.style.display = 'block';
     
+    // Кнопка "Назад" - закрывает модальное окно
+    const backBtn = document.getElementById('backModalBtn');
+    if (backBtn) {
+        backBtn.onclick = () => {
+            closeModal();
+        };
+    }
+    
     function updateTotalDisplay() {
         const totalSpan = document.getElementById('totalSum');
         if (totalSpan && selectedPrice) {
@@ -372,11 +384,6 @@ function openProductModal(product) {
         
         const quantityContainer = document.getElementById('quantityContainer');
         if (quantityContainer) quantityContainer.style.display = 'none';
-        
-        const step2Container = document.getElementById('step2Container');
-        if (step2Container && step2Container.style.display === 'block') {
-            addBtn.textContent = '⬅️ Выберите вариант';
-        }
     }
     
     function setupQuantityButtons() {
@@ -518,9 +525,9 @@ function escapeHtml(text) {
 function renderProductCard(product) {
     let displayPrice;
     if (currentPriceRange && product.priceRanges[currentPriceRange]) {
-        displayPrice = product.sale ? product.salePrice : product.priceRanges[currentPriceRange];
+        displayPrice = product.priceRanges[currentPriceRange];
     } else {
-        displayPrice = product.sale ? product.salePrice : Object.values(product.priceRanges)[0];
+        displayPrice = Object.values(product.priceRanges)[0];
     }
     
     const productJson = JSON.stringify(product).replace(/'/g, "&#39;").replace(/"/g, '&quot;');
