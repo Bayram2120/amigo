@@ -316,6 +316,8 @@ async function sendOrderToTelegram(orderText) {
 
 // ============ ФОРМА ОФОРМЛЕНИЯ ЗАКАЗА ============
 function openCheckoutForm() {
+    console.log('openCheckoutForm вызвана');
+    
     if (cart.length === 0) {
         alert('Корзина пуста');
         return;
@@ -324,6 +326,11 @@ function openCheckoutForm() {
     const userInfo = getUserInfo();
     
     const modal = document.getElementById('checkoutModal');
+    if (!modal) {
+        console.error('checkoutModal не найден в DOM');
+        return;
+    }
+    
     modal.innerHTML = `
         <div class="modal-content">
             <div class="modal-header">
@@ -341,8 +348,8 @@ function openCheckoutForm() {
                         <input type="text" id="city" placeholder="Москва" required>
                     </div>
                     <div class="form-group">
-                        <label>Адрес доставки (СДЭК/Почта) *</label>
-                        <textarea id="address" placeholder="Индекс, город, улица, дом, квартира" required></textarea>
+                        <label>Адрес доставки *</label>
+                        <textarea id="address" placeholder="Улица, дом, квартира/офис" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Номер телефона *</label>
@@ -360,15 +367,20 @@ function openCheckoutForm() {
     modal.style.display = 'block';
     
     const form = document.getElementById('orderForm');
-    form.onsubmit = (e) => {
-        e.preventDefault();
-        submitOrder();
-    };
+    if (form) {
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            submitOrder();
+        };
+    }
 }
 
 function closeCheckoutModal() {
-    document.getElementById('checkoutModal').style.display = 'none';
-    document.getElementById('checkoutModal').innerHTML = '';
+    const modal = document.getElementById('checkoutModal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.innerHTML = '';
+    }
 }
 
 function submitOrder() {
@@ -812,7 +824,10 @@ function renderCartPage() {
         });
     });
     
-    document.getElementById('checkoutBtn')?.addEventListener('click', openCheckoutForm);
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', openCheckoutForm);
+    }
 }
 
 function renderContactsPage() {
