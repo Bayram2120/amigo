@@ -600,6 +600,59 @@ body {
     margin: 30px 0 20px;
 }
 
+/* Стили для формы оформления заказа */
+.checkout-form {
+    padding: 10px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.submit-order-btn {
+    background: #FFD700;
+    color: #1a1a2e;
+    border: none;
+    padding: 16px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 @media (max-width: 480px) {
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
