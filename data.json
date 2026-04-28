@@ -30,7 +30,8 @@
       "Grape ace",
       "Strawberry watermelon",
       "Watermelon ice",
-      "Mexican mango"
+      "Mexican mango",
+      "Микс вкусов"
     ],
     "colors": null,
     "resistances": null,
@@ -58,7 +59,8 @@
       "Peach ice",
       "Ice mint",
       "Mexican mango",
-      "Watermelon ice"
+      "Watermelon ice",
+      "Микс вкусов"
     ],
     "colors": null,
     "resistances": null,
@@ -99,7 +101,8 @@
       "Клубника",
       "Блестящая вишня",
       "Белый банан",
-      "Манго персик"
+      "Манго персик",
+      "Микс вкусов"
     ],
     "colors": null,
     "resistances": null,
@@ -131,7 +134,8 @@
       "Радужные конфеты",
       "Хвоя апельсин",
       "Черная смородина алоэ",
-      "Ягоды хвоя мята"
+      "Ягоды хвоя мята",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -216,7 +220,8 @@
       "Черника лед",
       "Арбуз малина",
       "Манго персик арбуз",
-      "Виноград лед"
+      "Виноград лед",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -251,7 +256,8 @@
       "frozen strawberry",
       "blueberry wwatermelon",
       "strawberry watermelon pear",
-      "pink lemon"
+      "pink lemon",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -294,7 +300,8 @@
       "Экзотический",
       "Мармеладные мишки",
       "Мятный чай",
-      "Грейпфрут"
+      "Грейпфрут",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -329,7 +336,8 @@
       "Strawberry kiwi",
       "Sour apple ice",
       "Cool mint",
-      "Juicy rainbow ice"
+      "Juicy rainbow ice",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -370,7 +378,8 @@
       "Черничный энергетик",
       "Чёрная смородина",
       "Яблоко лайм",
-      "Ягодный мармелад"
+      "Ягодный мармелад",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -411,7 +420,8 @@
       "Черника мята",
       "Энергетик",
       "Яблоко лайм",
-      "Ягодный энергетик"
+      "Ягодный энергетик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -444,7 +454,8 @@
       "Клубничный Киви",
       "Яблоко Персик",
       "Клюквенная Сода",
-      "Малиновый Йогурт"
+      "Малиновый Йогурт",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -485,7 +496,8 @@
       "Фруктовый Скиттлс",
       "Черника Голубая Малина",
       "Яблоко",
-      "Ягодный Взрыв"
+      "Ягодный Взрыв",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -535,7 +547,8 @@
       "Черника Малина",
       "Спрайт",
       "Яблочный Энергетик",
-      "Клубника Киви"
+      "Клубника Киви",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -571,7 +584,8 @@
       "Лимон лайм",
       "Вишня гранат",
       "Киви драгонфрукт ягода",
-      "Арбуз малина"
+      "Арбуз малина",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -604,7 +618,8 @@
       "Свежая мята",
       "Кислое яблоко лёд",
       "Черника малина лёд",
-      "Ягодный микс"
+      "Ягодный микс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -643,7 +658,8 @@
       "Кислая клубника питайя",
       "Малина клубника",
       "Гранатовый всплекс",
-      "Ягодный чай"
+      "Ягодный чай",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -701,7 +717,8 @@
       "⁠Микс ягоды",
       "Капучино",
       "Сочный виноград лед",
-      "Персик"
+      "Персик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -747,7 +764,7 @@
       "Виноград лед",
       "Ледяная кола",
       "Лимон лайм",
-      "Мятный махито"
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -788,7 +805,8 @@
       "Арбузная мята",
       "Розовый лимон",
       "Голубая малина",
-      "Ананас кокос"
+      "Ананас кокос",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -824,7 +842,7 @@
       "Виноград-малина-холодок",
       "Киви-маракуйя",
       "Вишня-лимон-персик",
-      "Клубника-манго-холодок"
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -867,7 +885,8 @@
       "Ананас",
       "Кислый лимонный леденцы",
       "Табак",
-      "Чистый"
+      "Чистый",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -919,7 +938,8 @@
       "Сладкие ананасовые кольца",
       "Кислый лимон лайм",
       "Виноградный энергетик",
-      "Кислые мармеладные червячки"
+      "Кислые мармеладные червячки",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -955,7 +975,7 @@
       "Мятный лайм",
       "Черешня",
       "Черника малина",
-      "Яблоко персик"
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1018,7 +1038,8 @@
       "Watermelon babble gum",
       "Double apple",
       "Energy boom",
-      "Blueberry raspberry"
+      "Blueberry raspberry",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1059,7 +1080,8 @@
       "Raspberry grape",
       "Pineapple lemon watermelon",
       "Siberian berries",
-      "Strawberry Sundae"
+      "Strawberry Sundae",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1100,7 +1122,8 @@
       "Арбузный Лёд",
       "Ледяная Кола",
       "Мармеладные Мишки",
-      "Ледяная Медовая Дыня"
+      "Ледяная Медовая Дыня",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1141,7 +1164,8 @@
       "Cotton cloud",
       "Fresh mint",
       "Juicy shisha",
-      "Blueberry raspberry"
+      "Blueberry raspberry",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1184,7 +1208,8 @@
       "Чернично Розовый Лимонад",
       "Кислая арбузная жвачка",
       "Сочный персик",
-      "Ананасо-арбузная конфета"
+      "Ананасо-арбузная конфета",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1225,7 +1250,8 @@
       "Raspberry Pomegranate Ice",
       "Grape",
       "Watermelon Berry",
-      "Strawberry Watermelon"
+      "Strawberry Watermelon",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1266,7 +1292,8 @@
       "Raspberry Pomegranate Ice",
       "Strawberry Watermelon",
       "Grape Ice",
-      "Watermelon Ice"
+      "Watermelon Ice",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1297,7 +1324,8 @@
       "Чёрная смородина грейпфрут",
       "Кислая ежевика лёд",
       "Киви ананас персик",
-      "Кислая клубника Паттайя"
+      "Кислая клубника Паттайя",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1332,7 +1360,8 @@
       "Ледяной арбуз",
       "Клубника киви лед",
       "Виноград малина",
-      "Киви маракуйя гуава"
+      "Киви маракуйя гуава",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1369,7 +1398,8 @@
       "Blueberry Razz Lemon",
       "Blueberry Ice",
       "Blackberry Cranberry",
-      "Double Apple"
+      "Double Apple",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1402,7 +1432,8 @@
       "Киви маракуйя гуава",
       "Кислое яблоко",
       "Клубника киви",
-      "Ледяной арбуз"
+      "Ледяной арбуз",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1438,7 +1469,8 @@
       "Ледяной арбуз",
       "Виноград энергетик",
       "Жвачка клубника арбуз",
-      "Супер мята"
+      "Супер мята",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1478,7 +1510,7 @@
       "Peach",
       "Pear Cranberry Lemon",
       "Watermelon Ice",
-      "Watermelon Sour Peach"
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1537,7 +1569,8 @@
       "Blueberry ice",
       "Kiwi pineapple ice",
       "Grape ice",
-      "Watermelon ice"
+      "Watermelon ice",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1578,7 +1611,8 @@
       "Леденец кислое яблоко",
       "Черника малина лед",
       "Малина клубника",
-      "Черника роза мята"
+      "Черника роза мята",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1613,7 +1647,8 @@
       "Strawberry kiwi Ice",
       "Cherry Pomegranate Cranberry",
       "Blue Razz Ice",
-      "Watermelon Ice"
+      "Watermelon Ice",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1649,7 +1684,8 @@
       "Малина клубника",
       "Кислое яблоко киви",
       "Ледяной арбуз",
-      "Лимонад вишня персик"
+      "Лимонад вишня персик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1685,7 +1721,8 @@
       "Черника малина лёд",
       "Киви ананас персик",
       "Горная мята",
-      "Грушевый лимонад"
+      "Грушевый лимонад",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1721,7 +1758,8 @@
       "Спелая дыня",
       "Ледяной матча",
       "Манго",
-      "Клубника черная смородина"
+      "Клубника черная смородина",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1762,7 +1800,8 @@
       "Леденец кислая ежевика",
       "Чай ягодный микс",
       "Горная мята",
-      "Лимон лайм грейпфрут"
+      "Лимон лайм грейпфрут",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1798,7 +1837,8 @@
       "Двойное яблоко лед",
       "Черника лайм",
       "Ананас кокос лед",
-      "Ледяная ежевика"
+      "Ледяная ежевика",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1829,7 +1869,8 @@
       "Киви ананас персик",
       "Кислый виноград лёд",
       "Ледяной арбуз",
-      "Кислая глубинка питайя"
+      "Кислая глубинка питайя",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1860,7 +1901,8 @@
       "Кислый Апельсин Лайм",
       "Клубника Киви",
       "Клубника Малина Вишня",
-      "Арбуз Мята"
+      "Арбуз Мята",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1901,7 +1943,8 @@
       "Ежевика черная смородина",
       "Дыня арбуз лед",
       "Вишня черная смородина",
-      "Дыня арбуз лед"
+      "Дыня арбуз лед",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1942,7 +1985,8 @@
       "Лимон лайм",
       "Мятный морской бриз",
       "Черная вишня Байя",
-      "Черника малина лед"
+      "Черника малина лед",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -1978,7 +2022,8 @@
       "Грушевый лимонад",
       "Горная мята",
       "Вишня лайм",
-      "Кислая клубника питайя"
+      "Кислая клубника питайя",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2009,7 +2054,8 @@
       "Ледяной арбуз",
       "Вишня лимон",
       "Черника малина лед",
-      "Малина ананас"
+      "Малина ананас",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2053,7 +2099,8 @@
       "White peach raspberry",
       "Watermelon sour peach",
       "Watermelon grape boysenberry",
-      "Cherimoya grapefruit berries"
+      "Cherimoya grapefruit berries",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2094,7 +2141,8 @@
       "Peach ice",
       "Mango ice",
       "Strawberry ice",
-      "Strawberry mango"
+      "Strawberry mango",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2135,7 +2183,8 @@
       "Клубника Киви",
       "Клубника манго",
       "Манго персик",
-      "Арбуз лёд"
+      "Арбуз лёд",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2176,7 +2225,8 @@
       "Мохито черника",
       "Питахайя банан вишня",
       "Смешанные ягоды",
-      "Клубника манго"
+      "Клубника манго",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2239,7 +2289,8 @@
       "Питахайя Банан Вишня",
       "Клубника Киви",
       "Черника Арбуз",
-      "Вишня Кола"
+      "Вишня Кола",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2275,7 +2326,8 @@
       "Смузи Земляника Черешня",
       "Смузи Клубника Манго Лайм",
       "Тропическая жвачка",
-      "Тропические лесные ягоды"
+      "Тропические лесные ягоды",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2333,7 +2385,8 @@
       "Лимонад кислая ягода",
       "Сакура-виноград",
       "Тройная ягода",
-      "Черника-малина"
+      "Черника-малина",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2370,7 +2423,8 @@
       "клубника арбуз",
       "черника малина ментол",
       "клубника ментол",
-      "мята"
+      "мята",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2499,7 +2553,8 @@
       "Черника Малина",
       "Гавайский лимонад",
       "Вишня",
-      "Арбуз"
+      "Арбуз",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2539,7 +2594,8 @@
       "Черника Малина",
       "Гавайский лимонад",
       "Вишня",
-      "Арбуз"
+      "Арбуз",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2649,7 +2705,8 @@
       "Виноград лимон лед",
       "Лимон мята лед",
       "Кола вишня лед",
-      "Яблочный пирог"
+      "Яблочный пирог",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2684,7 +2741,8 @@
       "табак шоколад",
       "табак ваниль",
       "табак с фисташкой",
-      "табак с гранатом"
+      "табак с гранатом",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2710,7 +2768,8 @@
       "Berry coconut",
       "Blueberry",
       "Mango coconut",
-      "Original"
+      "Original",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2758,7 +2817,8 @@
       "⁠Маракуйя апельсин гуава",
       "⁠Кислое помело",
       "⁠Грейпфрут черная смородина",
-      "⁠Мармеладные червячки с колой"
+      "⁠Мармеладные червячки с колой",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2799,7 +2859,8 @@
       "Тропический микс",
       "Финта",
       "Черника лимон",
-      "Ягодный микс"
+      "Ягодный микс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2838,7 +2899,8 @@
       "Яблочный взрыв",
       "Черешня лайм",
       "Фруктовые конфеты",
-      "Ягодный микс"
+      "Ягодный микс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2874,7 +2936,8 @@
       "мохито с клубникой",
       "смородиновый лимонад",
       "сочный персик",
-      "черника ежевика"
+      "черника ежевика",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2928,7 +2991,8 @@
       "Сибирь",
       "Вишня",
       "Холодный чай со смородиной и лимоном",
-      "Гранатовый сок смородина и лимон"
+      "Гранатовый сок смородина и лимон",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -2939,7 +3003,7 @@
   },
   {
     "id": 83,
-    "name": "RICK AND MORTY&ZEF TRIP ACID 30ML 20MG ",
+    "name": "RICK AND MORTY&ZEF TRIP ACID 30ML 20MG ",
     "description": "",
     "category": "Жидкости",
     "priceRanges": {
@@ -2964,7 +3028,8 @@
       "Киви лайм",
       "Фруктовый скитлс",
       "Вишнёвая бомба",
-      "Тропический манго"
+      "Тропический манго",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3046,7 +3111,8 @@
       "Яблоко Лайм",
       "Кислые Ягоды",
       "Яблоко Клубника",
-      "Ежевика Лайм"
+      "Ежевика Лайм",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3057,7 +3123,7 @@
   },
   {
     "id": 85,
-    "name": "CHAPMAN 30ML 20MG/50MG ",
+    "name": "CHAPMAN 30ML 20MG/50MG ",
     "description": "",
     "category": "Жидкости",
     "priceRanges": {
@@ -3078,7 +3144,8 @@
       "Табак с ментолом и ягодами",
       "Цитрусовый табак",
       "Шоколадный табак",
-      "Яблочный табак"
+      "Яблочный табак",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3114,7 +3181,8 @@
       "Кислое земляничное мохито",
       "Кислые желатинки с маракуей и ананасом",
       "Кислый виноград с лаймом",
-      "Кислые дольки с персиком и клубникой"
+      "Кислые дольки с персиком и клубникой",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3161,7 +3229,8 @@
       "Манго с апельсином",
       "Грейпфрут с малиной",
       "Персик с маракуйей",
-      "Грейпфрут со смородиной"
+      "Грейпфрут со смородиной",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3205,7 +3274,8 @@
       "Лимон лайм",
       "Вишня",
       "Лимонад",
-      "Тархун"
+      "Тархун",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3255,7 +3325,8 @@
       "Лимон лайм",
       "Лесные ягоды",
       "Персик",
-      "Вишня"
+      "Вишня",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3301,7 +3372,8 @@
       "Малиновый джем",
       "Йогурт с киви",
       "Банан",
-      "Зеленое яблоко с вишней"
+      "Зеленое яблоко с вишней",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3347,7 +3419,8 @@
       "Малиновый джем",
       "Йогурт с киви",
       "Банан",
-      "Зеленое яблоко с вишней"
+      "Зеленое яблоко с вишней",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3388,7 +3461,8 @@
       "Бабл гам Арбуз",
       "Вишня Лайм",
       "Арбузный фреш",
-      "Ягодный микс"
+      "Ягодный микс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3429,7 +3503,8 @@
       "Бабл гам Арбуз",
       "Вишня Лайм",
       "Арбузный фреш",
-      "Ягодный микс"
+      "Ягодный микс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3469,7 +3544,8 @@
       "⁠мята",
       "⁠ананасовый лимонад",
       "⁠Маракуйя киви",
-      "⁠микс ягоды"
+      "⁠микс ягоды",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3509,7 +3585,8 @@
       "Gum Strawberry Kiwi",
       "Grape Lemonade",
       "Pink Lemonade",
-      "Marmalade Bears With Lemon"
+      "Marmalade Bears With Lemon",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3545,7 +3622,8 @@
       "Ледяной ананас",
       "Ягодный смузи",
       "Баблгам",
-      "Кола сода айс"
+      "Кола сода айс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3581,7 +3659,8 @@
       "Банан",
       "Дыня арбуз",
       "Яблоко",
-      "Энергетик"
+      "Энергетик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3617,7 +3696,8 @@
       "Тропические фрукты",
       "Ежевичный лимонад",
       "Смородина малина",
-      "Дыня банан"
+      "Дыня банан",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3653,7 +3733,8 @@
       "классический вкус оригинального энергетического напитка",
       "кисло-сладкий вкус сочного спелого киви",
       "сочетание смородины и яркого персика",
-      "сладкие барбарисовые конфеты"
+      "сладкие барбарисовые конфеты",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3684,7 +3765,8 @@
       "Grape lemonade",
       "Cola gummy bears",
       "Kiwi pineapple",
-      "Guava grapefruit"
+      "Guava grapefruit",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3715,7 +3797,8 @@
       "Жвачка Клубника Киви - Двойной Лёд",
       "Манго Гуава Маракуйя - Двойной Лёд",
       "Малина Клубника Черная и Красная Смородина - Двойной Лёд",
-      "Черника Малина Лимон - Двойной Лёд"
+      "Черника Малина Лимон - Двойной Лёд",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3726,7 +3809,7 @@
   },
   {
     "id": 102,
-    "name": "PODONKI V1 V2 30ML 60MG ",
+    "name": "PODONKI V1 V2 30ML 60MG ",
     "description": "",
     "category": "Жидкости",
     "priceRanges": {
@@ -3760,7 +3843,8 @@
       "Strawberry champagne",
       "Pineapple energy",
       "Kiwi lime tarhoon",
-      "Banana milk "
+      "Banana milk ",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3771,7 +3855,7 @@
   },
   {
     "id": 103,
-    "name": "PODONKI & ALFAVAPE 30ML 50MG ",
+    "name": "PODONKI & ALFAVAPE 30ML 50MG ",
     "description": "",
     "category": "Жидкости",
     "priceRanges": {
@@ -3811,7 +3895,8 @@
       "Манго апельсин",
       "Виноград смородина",
       "Ежевичный лимонад",
-      "Кока кола чупа чупс"
+      "Кока кола чупа чупс",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3847,7 +3932,8 @@
       "Освежающее яблоко",
       "Лимонное мороженое",
       "Газировка Байкал",
-      "Малиновое мороженое"
+      "Малиновое мороженое",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3858,7 +3944,7 @@
   },
   {
     "id": 105,
-    "name": "PODONKI LAST HAP 30ML 50MG ",
+    "name": "PODONKI LAST HAP 30ML 50MG ",
     "description": "",
     "category": "Жидкости",
     "priceRanges": {
@@ -3896,7 +3982,8 @@
       "НЕКТАРИН ВИШНЯ",
       "АНАНАС ЯБЛОКО",
       "КЛУБНИКА МЯТА",
-      "МАНГО МАНДАРИН"
+      "МАНГО МАНДАРИН",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3927,7 +4014,8 @@
       "Ледяной Йогурт Вишня",
       "Ледяной Йогурт Персик",
       "Ледяной Йогурт Черника Банан",
-      "Энергетик Лайм"
+      "Энергетик Лайм",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3958,7 +4046,8 @@
       "ГРЕЙПФРУТ МАЛИНА ВИНОГРАД",
       "КРЫЖОВНИК БАРБАРИС",
       "ЗЕЛЕНАЯ МЯТА ПЕРСИК КАКТУС",
-      "ЗЕФИР КОКОС ЧЕРНАЯ СМОРОДИНА"
+      "ЗЕФИР КОКОС ЧЕРНАЯ СМОРОДИНА",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -3993,7 +4082,8 @@
       "Melon-Blueberry",
       "Peach-Passion Fruit",
       "Pineapple-Blackberry",
-      "Pineapple-Coconut"
+      "Pineapple-Coconut",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4044,7 +4134,8 @@
       "Фруктовый лед",
       "Холс арбуз",
       "Холс лимон",
-      "Шампанское персик"
+      "Шампанское персик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4083,7 +4174,8 @@
       "Морозная фанта",
       "Морозный мохито",
       "Пино колада",
-      "Спрайт огурец"
+      "Спрайт огурец",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4164,7 +4256,8 @@
       "Черничный чизкейк",
       "Лимонад с грейпфрутом",
       "Садовые ягоды",
-      "Кислый крыжовник помело киви"
+      "Кислый крыжовник помело киви",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4217,7 +4310,8 @@
       "Черника арбуз",
       "Морозный арбуз",
       "Жвачка арбуз дыня",
-      "Морозный виноград"
+      "Морозный виноград",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4253,7 +4347,8 @@
       "Малина мята",
       "Миринда",
       "Груша барбарис",
-      "Кислое яблоко малина"
+      "Кислое яблоко малина",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4285,7 +4380,8 @@
       "Лесные ягоды",
       "Миринда",
       "Арбуз вишня",
-      "Энергетик"
+      "Энергетик",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4326,7 +4422,8 @@
       "Фруктовый Скиттлс",
       "Черника Голубая Малина",
       "Яблоко",
-      "Ягодный Взрыв"
+      "Ягодный Взрыв",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4399,7 +4496,8 @@
       "банановый фрундель",
       "бузина бет",
       "виноградный миссикс",
-      "гранатовый мортӣ"
+      "гранатовый мортӣ",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4472,7 +4570,8 @@
       "банановый фрундель",
       "бузина бет",
       "виноградный миссикс",
-      "гранатовый мортӣ"
+      "гранатовый мортӣ",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4515,7 +4614,8 @@
       "Cola & cherry",
       "Watermelon black currant",
       "Xbor raspberry",
-      "Strawberry & lime"
+      "Strawberry & lime",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4558,7 +4658,8 @@
       "Cola & cherry",
       "Watermelon black currant",
       "Xbor raspberry",
-      "Strawberry & lime"
+      "Strawberry & lime",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4589,7 +4690,8 @@
       "Экзотические фрукты",
       "Клубника гранат",
       "Бодрящий энергетик",
-      "Земляника дыня"
+      "Земляника дыня",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4626,7 +4728,8 @@
       "Persikovyi kuni",
       "Mangovyi frottaj",
       "Yablochnoye proniknovenie",
-      "kislo-sladkiy felching"
+      "kislo-sladkiy felching",
+      "МИКС"
     ],
     "colors": null,
     "resistances": null,
@@ -4653,7 +4756,8 @@
       "Light Green",
       "Midnight Black",
       "Mist Blue",
-      "Kit Pink"
+      "Kit Pink",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4688,7 +4792,8 @@
       "GORILLA",
       "DEATH",
       "HAWAI",
-      "CROWN"
+      "CROWN",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4738,7 +4843,8 @@
       "Rose Pink",
       "Tiffany Blue",
       "itanium Gray",
-      "Turquoise Green"
+      "Turquoise Green",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4764,7 +4870,8 @@
       "NIGHT GREEN",
       "BLACK",
       "SS",
-      "BRONZE BLUE"
+      "BRONZE BLUE",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4793,7 +4900,8 @@
       "KELLY GREEN",
       "CYAN GRADIEN",
       "WHITE",
-      "SEASHELL"
+      "SEASHELL",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4819,7 +4927,8 @@
       "ГОЛУБОЙ",
       "GUNMELAT",
       "КРАСНЫЙ",
-      "ЧЕРНЫЙ"
+      "ЧЕРНЫЙ",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4850,7 +4959,8 @@
       "Malachite",
       "Nybph",
       "Pink Cyan",
-      "Leahter"
+      "Leahter",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4879,7 +4989,8 @@
       "Classical Red",
       "Rococo Purple",
       "Blue Azur",
-      "Blue Nuit"
+      "Blue Nuit",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4907,7 +5018,8 @@
       "Red",
       "Green",
       "Orange",
-      "Pink"
+      "Pink",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4942,7 +5054,8 @@
       "SUMMER YELLOW",
       "PEACH PINK",
       "CREAMY PURPLE",
-      "SPRING GREEN"
+      "SPRING GREEN",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -4981,7 +5094,8 @@
       "Neon",
       "Aurora",
       "Ancent silver",
-      "Bronze gold"
+      "Bronze gold",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5013,7 +5127,8 @@
       "Mint green",
       "Peach pink",
       "Green",
-      "Ice blue"
+      "Ice blue",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5044,7 +5159,8 @@
       "Black",
       "Orange red",
       "Space grey",
-      "Lime purple"
+      "Lime purple",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5076,7 +5192,8 @@
       "Mint green",
       "Peach pink",
       "Green",
-      "Ice blue"
+      "Ice blue",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5108,7 +5225,8 @@
       "Mint green",
       "Peach pink",
       "Green",
-      "Ice blue"
+      "Ice blue",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5137,7 +5255,8 @@
       "camouflage",
       "twilight purple",
       "graphite black",
-      "titanium silver"
+      "titanium silver",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5168,7 +5287,8 @@
       "Opal Pink",
       "Opal White",
       "Jade Grene",
-      "Carbon Stripe"
+      "Carbon Stripe",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5199,7 +5319,8 @@
       "Flowing Blue",
       "Flowing Green",
       "Flowing Pink",
-      "Carbon Black"
+      "Carbon Black",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5231,7 +5352,8 @@
       "Mint green",
       "Peach pink",
       "Green",
-      "Ice blue"
+      "Ice blue",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5262,7 +5384,8 @@
       "Blue",
       "Green lime",
       "Sunset violet",
-      "Flame red"
+      "Flame red",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5291,7 +5414,8 @@
       "cyan",
       "purple",
       "blue",
-      "green"
+      "green",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5320,7 +5444,8 @@
       "cyan",
       "purple",
       "blue",
-      "green"
+      "green",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5349,7 +5474,8 @@
       "Bottle Green",
       "Mint Blue",
       "Red Blue",
-      "Pink Purple"
+      "Pink Purple",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5376,7 +5502,8 @@
       "MOON GRAY",
       "OCEAN BLUE",
       "POLAR SILVER",
-      "SUNSET YELLOW"
+      "SUNSET YELLOW",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5402,7 +5529,8 @@
       "Black",
       "Silver",
       "Gunmetal",
-      "Blue silver"
+      "Blue silver",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5428,7 +5556,8 @@
       "Gold",
       "Blue",
       "Purple",
-      "Pink"
+      "Pink",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5457,7 +5586,8 @@
       "Blue",
       "Rainbow",
       "Red",
-      "Black orange"
+      "Black orange",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5486,7 +5616,8 @@
       "Blue",
       "Rainbow",
       "Red",
-      "Black orange"
+      "Black orange",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5515,7 +5646,8 @@
       "Black Cobra",
       "Blue Cobra",
       "White Cobra",
-      "7Color Cobra"
+      "7Color Cobra",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5544,7 +5676,8 @@
       "Demon",
       "Tiger",
       "Raijin",
-      "Full black"
+      "Full black",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5571,7 +5704,8 @@
       "Black",
       "Aqua Green",
       "Purple",
-      "Lime Green"
+      "Lime Green",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5597,7 +5731,8 @@
       "Green",
       "Orange",
       "White",
-      "Red"
+      "Red",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5629,7 +5764,8 @@
       "Violet",
       "Yellow",
       "White",
-      "Violet gradien"
+      "Violet gradien",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5661,7 +5797,8 @@
       "Violet",
       "Yellow",
       "White",
-      "Violet gradien"
+      "Violet gradien",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5693,7 +5830,8 @@
       "Синий",
       "Фиолетовый",
       "Черный",
-      "Желтая"
+      "Желтая",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5722,7 +5860,8 @@
       "Green",
       "Pink",
       "Snow blue",
-      "Silvery white"
+      "Silvery white",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5749,7 +5888,8 @@
       "Carbon fiber",
       "Golden",
       "Pink",
-      "Gray"
+      "Gray",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5777,7 +5917,8 @@
       "Sky Blue",
       "Modern Red",
       "Glow Pink",
-      "Pearl White"
+      "Pearl White",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5804,7 +5945,8 @@
       "Green inlaid Gold",
       "Classic Black",
       "Classic Blue",
-      "Classic Brown"
+      "Classic Brown",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5832,7 +5974,8 @@
       "Pure white",
       "tiffany Grnee",
       "Soul Red",
-      "Tiffany Green"
+      "Tiffany Green",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5860,7 +6003,8 @@
       "Neon",
       "Mint Blue",
       "Gold",
-      "Space Grey"
+      "Space Grey",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -5890,7 +6034,8 @@
       "Midnight G",
       "Sunrise G",
       "Navy blue",
-      "Electric Violet"
+      "Electric Violet",
+      "МИКС"
     ],
     "resistances": null,
     "sale": false,
@@ -6194,7 +6339,8 @@
     "colors": null,
     "resistances": [
       "0.6om",
-      "1.2om"
+      "1.2om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6218,7 +6364,8 @@
     "resistances": [
       "0.35om",
       "0.55om",
-      "1.1om"
+      "1.1om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6240,7 +6387,8 @@
     "flavors": null,
     "colors": null,
     "resistances": [
-      "0.6om"
+      "0.6om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6264,7 +6412,8 @@
     "resistances": [
       "0.3om",
       "0.4om",
-      "0.6om"
+      "0.6om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6288,7 +6437,8 @@
     "resistances": [
       "0.6om",
       "0.8om",
-      "1.0om"
+      "1.0om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6311,7 +6461,8 @@
     "colors": null,
     "resistances": [
       "0.15om",
-      "0.30om"
+      "0.30om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6334,7 +6485,8 @@
     "colors": null,
     "resistances": [
       "0.5om",
-      "1.0om"
+      "1.0om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6361,7 +6513,8 @@
       "0.4om",
       "0.5om",
       "0.6om",
-      "1.2om"
+      "1.2om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
@@ -6407,7 +6560,8 @@
     "resistances": [
       "0.15om",
       "0.2om",
-      "0.3om"
+      "0.3om",
+      "МИКС"
     ],
     "sale": false,
     "salePrice": null,
