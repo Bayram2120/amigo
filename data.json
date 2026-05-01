@@ -1,4 +1,10 @@
 [
+  "shopName": "AmigoOPT",
+    "contactPhone": "+7 (999) 123-45-67",
+    "managerTgId": "123456789",
+    "botToken": "8629659554:AAH8jhO69OYbr0tnSQXuHKMdA3p3To7Ws7Q",
+    "categories": ["Электронки", "Жидкости", "Под-системы", "Испарители", "Картриджи"],
+    "products": [
   {
     "id": 1,
     "name": "ICON 40000",
