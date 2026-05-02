@@ -442,7 +442,7 @@ function submitOrder() {
     updateCartBadge();
 }
 
-// ============ МОДАЛЬНОЕ ОКНО ТОВАРА ============
+// ============ МОДАЛЬНОЕ ОКНО ТОВАРА (С ВОЗМОЖНОСТЬЮ ДОБАВЛЯТЬ НЕСКОЛЬКО РАЗ) ============
 function openProductModal(product) {
     currentProduct = product;
     selectedRange = null;
@@ -641,6 +641,7 @@ function openProductModal(product) {
             return; 
         }
         
+        // Добавляем товар в корзину
         cart.push({
             id: product.id,
             name: product.name,
@@ -652,18 +653,57 @@ function openProductModal(product) {
         });
         
         saveCart();
+        updateCartBadge();
         
-        const wasUpdated = checkAndUpdateRangeByTotal();
+        // Показываем уведомление
+        alert(`✅ ${selectedQuantity} шт "${product.name}" добавлено в корзину`);
         
-        if (wasUpdated) {
-            alert(`✅ Товар добавлен!\n\n📊 Ваша корзина теперь в диапазоне ${getRangeLabel(currentPriceRange)}. Цены пересчитаны.`);
-        } else {
-            alert('✅ Товар добавлен в корзину');
+        // СБРАСЫВАЕМ выбор, чтобы пользователь мог выбрать другой вариант ТОГО ЖЕ товара
+        // Но НЕ закрываем модальное окно!
+        selectedVariant = null;
+        selectedRange = null;
+        selectedPrice = null;
+        selectedQuantity = 1;
+        
+        // Сбрасываем визуальное выделение кнопок
+        document.querySelectorAll('.range-btn').forEach(btn => btn.classList.remove('selected'));
+        if (variantInfo3) {
+            document.querySelectorAll('.variant-option').forEach(btn => btn.classList.remove('selected'));
         }
         
-        closeModal();
-        if (currentPage === 'cart') renderCartPage();
-        updateCartBadge();
+        // Сбрасываем количество
+        const quantitySpan = document.getElementById('quantityValue');
+        if (quantitySpan) quantitySpan.textContent = '1';
+        
+        // Обновляем сумму
+        updateTotalDisplay();
+        
+        // Блокируем кнопку добавления до выбора новых параметров
+        addBtn.textContent = '⬅️ Выберите параметры';
+        addBtn.classList.add('disabled');
+        
+        // Если есть варианты, скрываем контейнер количества до выбора варианта
+        if (variantInfo3) {
+            const quantityContainer = document.getElementById('quantityContainer');
+            if (quantityContainer) quantityContainer.style.display = 'none';
+            
+            // Делаем шаг 1 снова активным
+            document.getElementById('step1Container').style.opacity = '1';
+            const step2Container = document.getElementById('step2Container');
+            if (step2Container) step2Container.style.display = 'none';
+        } else {
+            // Если нет вариантов, делаем шаг 1 снова активным
+            document.getElementById('step1Container').style.opacity = '1';
+            const quantityContainer = document.getElementById('quantityContainer');
+            if (quantityContainer) quantityContainer.style.display = 'none';
+            addBtn.textContent = '⬅️ Сначала выберите сумму';
+        }
+        
+        // Пересчитываем цены в корзине
+        const wasUpdated = checkAndUpdateRangeByTotal();
+        if (wasUpdated && currentPage === 'cart') {
+            renderCartPage();
+        }
     };
 }
 
