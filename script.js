@@ -286,11 +286,24 @@ function getVariantType(product) {
 
 // ============ ОТПРАВКА ЗАКАЗА В TELEGRAM ============
 async function sendOrderToTelegram(orderText) {
+    // Проверяем наличие токена
     if (!shopConfig.botToken) {
-        console.log('Бот не настроен');
+        console.error('Токен бота не найден в конфиге');
         alert('⚠️ Заказ создан, но бот не настроен. Сообщите менеджеру.');
         return;
     }
+    
+    // Убираем проверку на "ВАШ_ТОКЕН_БОТА" - это старая заглушка!
+    // Просто проверяем, что токен не пустой и не слишком короткий
+    if (shopConfig.botToken.length < 20) {
+        console.error('Токен бота похож на заглушку');
+        alert('⚠️ Заказ создан, но бот не настроен. Сообщите менеджеру.');
+        return;
+    }
+    
+    console.log('Попытка отправки заказа...');
+    console.log('Chat ID (менеджер):', shopConfig.managerTgId);
+    console.log('Токен бота:', shopConfig.botToken.substring(0, 15) + '...');
     
     try {
         const response = await fetch(`https://api.telegram.org/bot${shopConfig.botToken}/sendMessage`, {
@@ -304,13 +317,20 @@ async function sendOrderToTelegram(orderText) {
         });
         
         const result = await response.json();
+        console.log('Ответ от Telegram:', result);
+        
         if (result.ok) {
-            console.log('Заказ отправлен');
+            console.log('✅ Заказ успешно отправлен!');
+            return true;
         } else {
-            console.error('Ошибка:', result.description);
+            console.error('Ошибка Telegram API:', result.description);
+            alert(`❌ Ошибка отправки: ${result.description}\n\nПроверьте:\n1. Бот запущен?\n2. Менеджер написал боту /start?\n3. Правильный ли токен?`);
+            return false;
         }
     } catch(error) {
-        console.error('Ошибка:', error);
+        console.error('Ошибка соединения:', error);
+        alert('⚠️ Ошибка соединения с Telegram. Заказ сохранен в корзине.\nСообщите менеджеру вручную.');
+        return false;
     }
 }
 
