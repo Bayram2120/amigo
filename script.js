@@ -286,7 +286,7 @@ function getVariantType(product) {
 
 // ============ ОТПРАВКА ЗАКАЗА В TELEGRAM ============
 async function sendOrderToTelegram(orderText) {
-    if (!shopConfig.botToken || shopConfig.botToken === "8719723110:AAEMJuXTAh6GFXyh881z6Yk5xmIs1uliEYA") {
+    if (!shopConfig.botToken) {
         console.log('Бот не настроен');
         alert('⚠️ Заказ создан, но бот не настроен. Сообщите менеджеру.');
         return;
