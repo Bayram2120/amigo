@@ -7590,6 +7590,50 @@
       "salePrice": null,
       "photo": "https://i.postimg.cc/L4khV1mB/5465129912189523972.jpg",
       "popular": false
+    },
+    {
+      "id": 234,
+      "name": "ЗЛАЯ МОНАШКА 30ML 70MG",
+      "description": "",
+      "category": "Жидкости",
+      "priceRanges": {
+        "3000-10000": 370,
+        "10000-30000": 365,
+        "30000-50000": 360,
+        "50000-100000": 350,
+        "100000-999999": 340
+      },
+      "flavors": [
+        "МИКС"
+      ],
+      "colors": null,
+      "resistances": null,
+      "sale": false,
+      "salePrice": null,
+      "photo": "https://i.postimg.cc/sXcQ1n1w/5192728436143757654.jpg",
+      "popular": false
+    },
+    {
+      "id": 235,
+      "name": "FOGGY 30ML 80MG",
+      "description": "",
+      "category": "Жидкости",
+      "priceRanges": {
+        "3000-10000": 270,
+        "10000-30000": 265,
+        "30000-50000": 260,
+        "50000-100000": 250,
+        "100000-999999": 240
+      },
+      "flavors": [
+        "МИКС"
+      ],
+      "colors": null,
+      "resistances": null,
+      "sale": false,
+      "salePrice": null,
+      "photo": "https://i.postimg.cc/G2c90kKf/5199893687134001257.jpg",
+      "popular": false
     }
   ]
 }
